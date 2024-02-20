@@ -1,5 +1,5 @@
 import { View, Button, Text } from "react-native";
-import { Navigation } from "../Login/login";
+import { Navigation } from "../../App/Authentication/Login";
 
 export function RingScreen({ navigation }: { navigation: Navigation }) {
   return (

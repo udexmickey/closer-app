@@ -9,7 +9,7 @@ import {
   Button,
 } from "react-native";
 import React from "react";
-import { Navigation } from "../Login/login";
+import { Navigation } from "../../App/Authentication/Login";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;

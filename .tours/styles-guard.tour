@@ -1,0 +1,32 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "styles Guard",
+  "steps": [
+    {
+      "file": "nativewind.config.tsx",
+      "description": "React-native doesn't support classNames as props but i will be using tailwind css for my styling",
+      "line": 1
+    },
+    {
+      "file": "nativewind.config.tsx",
+      "description": "This file is a custom file i used to rename the components from reactNative. This helps wrap my reactnative component with react-wind styles guard, which helps to pass className as props to my components....",
+      "line": 6
+    },
+    {
+      "file": "nativewind.config.tsx",
+      "description": "For my SafeAreaView component, i will be getting it from \"react-native-safe-area-context\" this helps provides more options for my styles and componets useage",
+      "line": 10,
+      "selection": {
+        "start": {
+          "line": 1,
+          "character": 1
+        },
+        "end": {
+          "line": 1,
+          "character": 158
+        }
+      }
+    }
+  ],
+  "ref": "main"
+}

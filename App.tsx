@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Dimensions } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { MenuBottom } from "@/component/menu/Bottom.menu";
+import { MenuBottom } from "@/components/menu/Bottom.menu";
 
 import {
   StackNavigationOptions,
@@ -12,11 +12,15 @@ import {
 
 import MainApp from "@/App/MainApp";
 import OnboardingScreen from "@/App/OnboardingScreens";
+import { LoginScreen } from "@/App/Authentication/Login";
+import { SignupScreen } from "@/App/Authentication/Signup/signup";
 
 // Define the type for the Stack Navigator options
 type RootStackParamList = {
   Onboarding: undefined;
   MainApp: undefined;
+  LoginScreen: undefined;
+  SignupScreen: undefined;
 };
 
 // Create the Stack Navigator with proper types
@@ -36,6 +40,8 @@ export default function App() {
         {/* On App load it shows the onboarding screen then after auth it shows the main app */}
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="MainApp" component={MainApp} />
+        <Stack.Screen name="LoginScreen" component={LoginScreen} />
+        <Stack.Screen name="SignupScreen" component={SignupScreen} />
       </Stack.Navigator>
       <StatusBar style="auto" />
     </NavigationContainer>

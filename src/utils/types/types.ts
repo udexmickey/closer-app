@@ -35,19 +35,14 @@ export interface TextAreaFieldProps {
 // Auth Button Props
 export interface AuthButtonProps {
     content: string;
-    isDisabled: boolean;
-    type: any;
-    isLoading: any;
-}
-
-// App Button Props
-export interface AppButtonProps {
-    content: string;
     onClickButton: () => void;
     isRounded: boolean;
     isLoading: any;
-    type: any;
+    spanRight?: any;
+    spanRightStyle?: string;
     isDisabled: boolean;
+    textStyle?: string;
+    ButtonStyle?: string;
 }
 
 export interface OutlinedButtonProps {

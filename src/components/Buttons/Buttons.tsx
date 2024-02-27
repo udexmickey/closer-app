@@ -1,170 +1,72 @@
 "use client";
 import {
-  AppButtonProps,
   CloseAppButtonProps,
   AuthButtonProps,
   OutlinedButtonProps,
 } from "@/utils/types/types";
+import { TextDiv, TouchableOpacityDiv } from "nativewind.config";
 import React from "react";
 
 export function AuthButton({
   content,
-  type,
-  isDisabled,
+  onClickButton,
+  isRounded,
   isLoading,
+  isDisabled,
+  textStyle,
+  ButtonStyle,
+  spanRight,
+  spanRightStyle,
 }: AuthButtonProps) {
   return (
-    <button
-      type={type}
-      className={`w-full rounded-[5px] py-4 ${
-        isDisabled ? "bg-[#2b0a6071]" : "bg-primaryColor"
-      } ${
-        isDisabled ? "cursor-not-allowed" : "cursor-pointer"
-      } text-white font-[600] text-[1vw]`}
+    <TouchableOpacityDiv
+      onPress={onClickButton}
       disabled={isDisabled}
-    >
-      {isLoading ? (
-        <span className="flex items-center justify-center">
-          <svg
-            className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            ></circle>
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.963 7.963 0 014 12H0c0 3.042 1.135 5.86 3.01 7.978l2.01-2.686zm2.967 2.677A7.963 7.963 0 0112 20v-4a3.993 3.993 0 00-3.888-3.98L8.967 20.968zM12 4c2.71 0 5.19 1.054 7.02 2.775l2.01-2.686A11.963 11.963 0 0012 0v4zM4.022 6.732l2.01 2.686A11.963 11.963 0 000 12h4c0-1.516.29-2.98.818-4.268zm1.178 5.306l-2.01 2.686A11.963 11.963 0 004 20h4c0-1.516.29-2.98.818-4.268L5.2 12.038zM20.978 8.732A11.963 11.963 0 0020 12h4c0-3.042-1.135-5.86-3.01-7.978l-2.01 2.686zm-2.967 2.677L15.033.332A7.963 7.963 0 0112 4v4a3.993 3.993 0 003.888 3.98z"
-            ></path>
-          </svg>
-          Loading...
-        </span>
-      ) : (
-        content
-      )}
-    </button>
-  );
-}
-
-export function AppButton({
-  content,
-  onClickButton,
-  isRounded,
-  isLoading,
-  type,
-  isDisabled,
-}: AppButtonProps) {
-  return (
-    <button
-      className={`w-full ${isRounded ? "rounded-full" : "rounded-[5px]"} py-3 ${
-        isDisabled ? "bg-[#2b0a6071]" : "bg-primaryColor"
-      } ${
-        isDisabled ? "cursor-not-allowed" : "cursor-pointer"
-      } text-white font-[400] text-[4vw]`}
-      type={type}
-      disabled={isDisabled}
-      onClick={onClickButton}
-      style={{ border: "1px solid rgba(63, 63, 68, 0.00)" }}
-    >
-      {isLoading ? (
-        <span className="flex items-center justify-center">
-          <svg
-            className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            ></circle>
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.963 7.963 0 014 12H0c0 3.042 1.135 5.86 3.01 7.978l2.01-2.686zm2.967 2.677A7.963 7.963 0 0112 20v-4a3.993 3.993 0 00-3.888-3.98L8.967 20.968zM12 4c2.71 0 5.19 1.054 7.02 2.775l2.01-2.686A11.963 11.963 0 0012 0v4zM4.022 6.732l2.01 2.686A11.963 11.963 0 000 12h4c0-1.516.29-2.98.818-4.268zm1.178 5.306l-2.01 2.686A11.963 11.963 0 004 20h4c0-1.516.29-2.98.818-4.268L5.2 12.038zM20.978 8.732A11.963 11.963 0 0020 12h4c0-3.042-1.135-5.86-3.01-7.978l-2.01 2.686zm-2.967 2.677L15.033.332A7.963 7.963 0 0112 4v4a3.993 3.993 0 003.888 3.98z"
-            ></path>
-          </svg>
-          Loading...
-        </span>
-      ) : (
-        content
-      )}
-    </button>
-  );
-}
-
-export function OutlinedAppButton({
-  content,
-  onClickButton,
-  isRounded,
-  isLoading,
-}: AppButtonProps) {
-  return (
-    <button
-      onClick={onClickButton}
-      className={`w-full ${
+      className={`${ButtonStyle} text-center text-white flex justify-center items-center w-full mx-auto ${
         isRounded ? "rounded-full" : "rounded-[5px]"
-      } py-3 bg-white border border-[#EBECEF] cursor-pointer text-[#17181C] font-[400] text-[4vw]`}
+      } p-3 cursor-pointer font-normal text-base`}
     >
       {isLoading ? (
         <span className="flex items-center justify-center">
-          <svg
-            className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            ></circle>
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.963 7.963 0 014 12H0c0 3.042 1.135 5.86 3.01 7.978l2.01-2.686zm2.967 2.677A7.963 7.963 0 0112 20v-4a3.993 3.993 0 00-3.888-3.98L8.967 20.968zM12 4c2.71 0 5.19 1.054 7.02 2.775l2.01-2.686A11.963 11.963 0 0012 0v4zM4.022 6.732l2.01 2.686A11.963 11.963 0 000 12h4c0-1.516.29-2.98.818-4.268zm1.178 5.306l-2.01 2.686A11.963 11.963 0 004 20h4c0-1.516.29-2.98.818-4.268L5.2 12.038zM20.978 8.732A11.963 11.963 0 0020 12h4c0-3.042-1.135-5.86-3.01-7.978l-2.01 2.686zm-2.967 2.677L15.033.332A7.963 7.963 0 0112 4v4a3.993 3.993 0 003.888 3.98z"
-            ></path>
-          </svg>
-          Loading...
+          <TextDiv className={`${textStyle}`}>Loading...</TextDiv>
         </span>
       ) : (
-        content
+        <TextDiv className="flex items-center justify-center text-center">
+          <TextDiv className={`${textStyle}`}>{content}</TextDiv> {` `}
+          {spanRight && (
+            <TextDiv className={spanRightStyle} onPress={onClickButton}>
+              {spanRight}
+            </TextDiv>
+          )}
+        </TextDiv>
       )}
-    </button>
+    </TouchableOpacityDiv>
   );
 }
 
-export function OutlinedAppButton2({
-  content,
-  onClickButton,
-  isRounded,
-}: OutlinedButtonProps) {
-  return (
-    <button
-      onClick={onClickButton}
-      className={`w-full ${
-        isRounded ? "rounded-full" : "rounded-[5px]"
-      } py-3 bg-transparent border border-[#979797] px-14 cursor-pointer text-[#737373] font-[400] text-[1vw]`}
-    >
-      {content}
-    </button>
-  );
-}
+// export function OutlinedAppButton({
+//   content,
+//   onClickButton,
+//   isRounded,
+//   isLoading,
+// }: AppButtonProps) {
+//   return (
+//     <TouchableOpacityDiv
+//       onPress={onClickButton}
+//       className={`w-full ${
+//         isRounded ? "rounded-full" : "rounded-[5px]"
+//       }  bg-white border border-[#EBECEF] px-6 py-4 cursor-pointer text-[#17181C] font-normal text-xl`}
+//     >
+//       {isLoading ? (
+//         <span className="flex items-center justify-center">
+//           <TextDiv>Loading...</TextDiv>
+//         </span>
+//       ) : (
+//         <TextDiv>{content}</TextDiv>
+//       )}
+//     </TouchableOpacityDiv>
+//   );
+// }
 
 export function ContentOutlinedButton({
   content,

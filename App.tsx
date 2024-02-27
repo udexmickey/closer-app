@@ -1,64 +1,97 @@
-import "react-native-gesture-handler";
-import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { StyleSheet, Dimensions } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { MenuBottom } from "@/components/menu/Bottom.menu";
-
-import {
-  StackNavigationOptions,
-  createStackNavigator,
-} from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import MainApp from "@/App/MainApp";
 import OnboardingScreen from "@/App/OnboardingScreens";
-import { LoginScreen } from "@/App/Authentication/Login";
+import { Login } from "@/App/Authentication/Login";
 import { SignupScreen } from "@/App/Authentication/Signup/signup";
+import { WelcomeScreen } from "@/Screens/Welcome";
 
-// Define the type for the Stack Navigator options
 type RootStackParamList = {
-  Onboarding: undefined;
+  Onboarding: {
+    onboardingComplete: () => void;
+    goToLogin: () => void; // Callback to navigate to login screen
+  };
   MainApp: undefined;
-  LoginScreen: undefined;
+  Welcome: undefined;
+  Login: undefined;
   SignupScreen: undefined;
 };
 
-// Create the Stack Navigator with proper types
 const Stack = createStackNavigator<RootStackParamList>();
 
-//dynamic width for all devices
-const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(true);
+  const navigationRef = useRef<any>();
 
-export default function App() {
+  useEffect(() => {
+    checkAuthentication();
+  }, []);
+
+  const checkAuthentication = async () => {
+    const hasCompletedOnboarding = await AsyncStorage.getItem(
+      "hasCompletedOnboarding"
+    );
+    setShowOnboarding(!hasCompletedOnboarding);
+
+    const isAuthenticated = await AsyncStorage.getItem("isLoggedIn");
+    setIsLoggedIn(Boolean(isAuthenticated));
+  };
+
+  const handleOnboardingComplete = async () => {
+    await AsyncStorage.setItem("hasCompletedOnboarding", "true");
+    setShowOnboarding(false);
+  };
+
+  const handleLogin = async () => {
+    await AsyncStorage.setItem("isLoggedIn", "true");
+    setIsLoggedIn(true);
+  };
+
+  useEffect(() => {
+    const unsubscribe = navigationRef.current?.addListener("state", () => {
+      // Check if the current screen is Onboarding and set options accordingly
+      const routeName = navigationRef.current?.getCurrentRoute()?.name;
+      if (routeName === "Onboarding") {
+        navigationRef.current?.setOptions({
+          headerShown: false,
+          onboardingComplete: handleOnboardingComplete,
+        });
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
+  const goToLogin = () => {
+    navigationRef.current?.navigate("Login");
+  };
+
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
-        initialRouteName="Onboarding"
+        initialRouteName={
+          showOnboarding ? "Onboarding" : isLoggedIn ? "MainApp" : "Welcome"
+        }
         screenOptions={{ headerShown: false }}
       >
-        {/* On App load it shows the onboarding screen then after auth it shows the main app */}
-        <Stack.Screen name="Onboarding" component={OnboardingScreen} />
-        <Stack.Screen name="MainApp" component={MainApp} />
-        <Stack.Screen name="LoginScreen" component={LoginScreen} />
-        <Stack.Screen name="SignupScreen" component={SignupScreen} />
+        {showOnboarding ? (
+          <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+        ) : isLoggedIn ? (
+          <Stack.Screen name="MainApp" component={MainApp} />
+        ) : (
+          <>
+            <Stack.Screen name="Welcome" component={WelcomeScreen} />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="SignupScreen" component={SignupScreen} />
+          </>
+        )}
       </Stack.Navigator>
-      <StatusBar style="auto" />
     </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  image: {
-    aspectRatio: 1,
-    width: windowWidth * 0.9,
-    height: windowHeight * 0.9,
-  },
-});
+export default App;

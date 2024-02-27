@@ -1,38 +1,27 @@
 import { StackNavigationProp } from "@react-navigation/stack";
-import React from "react";
-import { Dimensions, StyleSheet } from "react-native";
-import Swiper from "react-native-swiper";
-import { LinearGradient } from "expo-linear-gradient";
-import Svg, { Circle, Rect, Path, G, TSpan } from "react-native-svg";
-import {
-  SafeAreaViewDiv,
-  ViewDiv,
-  ImageBackgroundDiv,
-  TextDiv,
-  ImageDiv,
-  TouchableOpacityDiv,
-} from "nativewind.config";
-import { AppButton, OutlinedAppButton } from "@/components/Buttons/Buttons";
+import React, { useState } from "react";
+import { StyleSheet } from "react-native";
+import { ViewDiv, TextDiv, ScrollViewDiv } from "nativewind.config";
+import { AuthButton } from "@/components/Buttons/Buttons";
+import SlideOne from "./slides/SlideOne";
+import Stepper from "./stepper";
 
 type OnboardingScreenProps = {
   navigation: StackNavigationProp<any, any>;
 };
 
-const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
-const image1 = {
-  uri: "https://res.cloudinary.com/dtuims4ku/image/upload/v1701817278/Rectangle_571_ifgga6.svg",
-};
-
-const image2 = {
-  uri: "https://res.cloudinary.com/dtuims4ku/image/upload/v1701815462/auth-banner-fotor-20231205233037_fhxmwr.png",
-};
-
-// const image = {require("../../assets/images/women-standing-together-caring-eachother.jpeg")};
-
 const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
-  const handleContinue = () => {
-    navigation.navigate("MainApp");
+  const [step, setStep] = useState(0);
+  const totalSteps = 4;
+
+  const handleNext = () => {
+    if (step < totalSteps - 1) {
+      setStep(step + 1);
+    }
+  };
+
+  const handleSkip = () => {
+    navigation.navigate("LoginScreen");
   };
 
   const handleGoToLogin = () => {
@@ -40,319 +29,181 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
   };
 
   const handleGoToSignup = () => {
+    console.log("====================================");
+    console.log("Go to Signup screen");
+    console.log("====================================");
     navigation.navigate("SignupScreen");
   };
 
-  const OnboardButton = (
-    <ViewDiv
-    // style={styles.actionBtn}
-    >
-      <TouchableOpacityDiv
-        // style={styles.actionBtn1}
-        onPress={handleGoToSignup}
-      >
-        <TextDiv
-        // style={styles.buttonText1}
-        >
-          Join Closer
-        </TextDiv>
-      </TouchableOpacityDiv>
+  const renderStep = () => {
+    switch (step) {
+      case 0:
+        return (
+          <SlideOne
+            navigation={navigation}
+            image={require("../../assets/images/onboard-slide-1.png")}
+            title={"Own Your Menstrual Cycle. Plan, Track, Thrive!"}
+            description={""}
+            handleSkip={handleSkip}
+            handleActionClick={handleGoToLogin}
+            buttonElement={undefined}
+            buttonText={"Next"}
+            isLastItem={!(step < totalSteps - 1) ? true : false}
+            isFirstItem={step === 0 ? true : false}
+          />
+        );
+      case 1:
+        return (
+          <SlideOne
+            navigation={navigation}
+            image={require("../../assets/images/onboard-slide-2.png")}
+            title={"Track, Build, Achieve"}
+            description={
+              "Harness the power of each phase of your menstrual cycle."
+            }
+            handleSkip={handleSkip}
+            handleActionClick={handleGoToLogin}
+            buttonElement={undefined}
+            buttonText={"Next"}
+            isLastItem={!(step < totalSteps - 1) ? true : false}
+          />
+        );
+      case 2:
+        return (
+          <SlideOne
+            navigation={navigation}
+            image={require("../../assets/images/onboard-slide-3.png")}
+            title={"Sync, Cycle and Schedule"}
+            description={
+              "Your cycle data - it’s safe and syncs with your work and life plan."
+            }
+            handleSkip={handleSkip}
+            handleActionClick={handleGoToLogin}
+            buttonElement={undefined}
+            buttonText={"Next"}
+            isLastItem={!(step < totalSteps - 1) ? true : false}
+          />
+        );
+      case 3:
+        return (
+          <SlideOne
+            navigation={navigation}
+            image={require("../../assets/images/onboard-slide-4.png")}
+            buttonText={"Next"}
+            isLastItem={!(step < totalSteps - 1) ? true : false}
+            title={"End Period Poverty for Good"}
+            description={
+              "For every confidence goal achieved, you are a few points closer to ending period poverty."
+            }
+            handleSkip={handleSkip}
+            handleActionClick={handleGoToLogin}
+            buttonElement={OnboardButton}
+          />
+        );
+      default:
+        return null;
+    }
+  };
 
-      <TouchableOpacityDiv
-        // style={styles.actionBtn2}
-        onPress={handleGoToLogin}
-      >
-        <TextDiv
-        //
-        // style={styles.buttonText2}
-        >
-          Already have an account?{`  `}
-          <TextDiv
-            style={{
-              color: "#2B0A60",
-              fontWeight: "bold",
-              fontSize: 16,
-            }}
-            onPress={handleGoToLogin}
-          >
-            Log In
-          </TextDiv>
-        </TextDiv>
-      </TouchableOpacityDiv>
+  const OnboardButton = (
+    <ViewDiv className="space-y-3 flex w-[90%] mt-10">
+      <ViewDiv className="text-white">
+        <AuthButton
+          content="Get Started"
+          onClickButton={handleGoToSignup}
+          isRounded={true}
+          isLoading={undefined}
+          isDisabled={false}
+          textStyle="text-white text-center text-base font-medium"
+          ButtonStyle="bg-[#2B0A60] w-full"
+        />
+      </ViewDiv>
+      <ViewDiv>
+        <AuthButton
+          content="Already have an account?"
+          onClickButton={handleGoToLogin}
+          isRounded={true}
+          isLoading={undefined}
+          isDisabled={false}
+          spanRight={"Log In"}
+          spanRightStyle="text-[#2B0A60] font-medium"
+          textStyle="text-[#17181C] font-medium text-base text-center"
+          ButtonStyle="bg-white border border-[#EBECEF]"
+        />
+      </ViewDiv>
     </ViewDiv>
-    // <ViewDiv className="space-y-5">
-    //   <AppButton
-    //     content="Get Started"
-    //     onClickButton={handleGoToSignup}
-    //     isRounded={true}
-    //     isLoading={undefined}
-    //     type="button"
-    //     isDisabled={false}
-    //   />
-    //   <OutlinedAppButton
-    //     content="Already have an account? Log In"
-    //     onClickButton={handleGoToLogin}
-    //     isRounded={true}
-    //     isLoading={undefined}
-    //     type="button"
-    //     isDisabled={false}
-    //   />
-    // </ViewDiv>
   );
 
   return (
     <ViewDiv
-      // style={styles.container}
-      className="flex-1 bg-yellow-500"
+      style={{
+        flex: 1,
+        backgroundColor: "#fff",
+        width: "100%",
+        justifyContent: "center",
+        display: "flex",
+        alignItems: "center",
+      }}
     >
-      <Swiper
-        style={styles.wrapper}
-        showsButtons={false}
-        loop={true}
-        autoplay={true}
-        paginationStyle={styles.paginationStyle} // Set pagination style
-        dotStyle={styles.dotStyle} // Style for inactive dot
-        activeDotStyle={styles.activeDotStyle} // Style for active dot
+      <ScrollViewDiv
+        horizontal
+        pagingEnabled
+        style={{ flex: 1 }}
+        // contentContainerStyle={{ flexGrow: 1 }}
       >
-        {/* slide 1 */}
+        {renderStep()}
+      </ScrollViewDiv>
+      <ViewDiv
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          width: "100%",
+          // justifyContent: "center",
+          paddingHorizontal: 20,
+          display: "flex",
+          alignItems: "center",
+          position: "absolute",
+          // top: 0,
+          right: 0,
+          left: 0,
+          bottom: !(step < totalSteps - 1) ? 50 : 70,
+        }}
+      >
         <ViewDiv
-          // style={styles.slide1}
-          className={`h-[${windowHeight}px] flex-1 items-center justify-center`}
+          className={`${
+            !(step < totalSteps - 1) ? "space-y-4" : "space-y-6"
+          } flex w-full max-w-screen-sm`}
         >
-          <LinearGradient
-            colors={["#F9F9F9", "#2B0A60"]} // Array of gradient colors
-            start={{ x: 0, y: 0 }} // Start point (top-left)
-            end={{ x: 0, y: 1 }} // End point (bottom-left)
-
-            // style={styles.gradientBackground}
-          >
-            <ImageBackgroundDiv
-              source={image2}
-              // style={styles.bgImageStyle}
-              accessibilityLabel={`Closer welcome banner`}
-              resizeMethod="resize"
-              resizeMode="cover"
-              className={`h-screen w-screen flex items-center justify-center`}
-            >
-              <TextDiv
-                // style={styles.slideTextContent}
-                className="text-center text-white text-2xl leading-10 max-w-xs font-bold"
-              >
-                Own Your Menstrual Cycle: Plan, Track, Thrive!
-              </TextDiv>
-              {OnboardButton}
-            </ImageBackgroundDiv>
-          </LinearGradient>
-        </ViewDiv>
-
-        {/* // slide 2 */}
-        <ViewDiv
-          // style={styles.slide}
-          className={`w-screen h-screen flex items-center justify-center`}
-        >
-          <ViewDiv className="flex items-center justify-center h-[390px] w-[390px]">
-            <ImageDiv
-              source={image2}
-              className={`h-full w-full rounded-full object-contain`}
-            />
+          <ViewDiv style={styles.stepperContainer}>
+            <Stepper currentStep={step} totalSteps={totalSteps} />
           </ViewDiv>
-          {/* <ImageBackgroundDiv
-            source={image2}
-            // style={styles.bgImageStyle}
-            accessibilityLabel={`Closer welcome banner`}
-            resizeMethod="resize"
-            resizeMode="cover"
-            className={`h-screen w-screen object-cover flex items-center justify-center`}
-          > */}
-          <TextDiv
-            // style={styles.slideTextContent}
-            className="text-center text-white text-2xl leading-10 max-w-xs font-bold"
-          >
-            Own Your Menstrual Cycle: Plan, Track, Thrive!
-          </TextDiv>
-          {OnboardButton}
-          {/* </ImageBackgroundDiv> */}
+          {!(step < totalSteps - 1) ? (
+            OnboardButton
+          ) : (
+            <ViewDiv className="space-y-3 flex w-full">
+              <AuthButton
+                content={"Next"}
+                onClickButton={handleNext}
+                isRounded={true}
+                isLoading={undefined}
+                isDisabled={false}
+                textStyle="text-white text-center text-lg font-semibold"
+                ButtonStyle="bg-[#2B0A60] w-full"
+              />
+            </ViewDiv>
+          )}
         </ViewDiv>
-      </Swiper>
+      </ViewDiv>
     </ViewDiv>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    // alignItems: "center",
-    // justifyContent: "center",
-  },
-
-  wrapper: {
-    height: windowHeight,
-  },
-
-  slide1: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    height: windowHeight,
-    width: windowWidth,
-  },
-  gradientBackground: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
+  stepperContainer: {
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-  },
-  bgImageStyle: {
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  slideContent: {
-    alignItems: "center",
-    marginBottom: 20, // Adjust spacing between content and image
-  },
-
-  slideTextHeader: {
-    fontSize: 24,
-    lineHeight: 32.78,
-    textAlign: "center",
-    fontWeight: "700",
-    color: "#2E2E2E",
-  },
-
-  slideTextContent: {
-    fontSize: 16,
-    textAlign: "center",
-    fontWeight: "700",
-    color: "#2E2E2E",
-    lineHeight: 21.8,
-  },
-
-  paginationStyle: {
-    // position: "absolute",
-    // top: 0, // Position at the top of the screen
-    alignItems: "center",
-    justifyContent: "center",
-    alignSelf: "center",
-  },
-
-  dotStyle: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: "rgba(0,0,0,.2)",
-    marginLeft: 3,
-    marginRight: 3,
-    marginBottom: 10,
-  },
-
-  activeDotStyle: {
-    width: 28,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: "#2B0A60", // Active dot color
-    marginLeft: 3,
-    marginRight: 3,
-    marginBottom: 10, // Adjust margin bottom to move dots down if needed
-  },
-
-  // slideTextHeader: {
-  //   color: "white",
-  //   fontSize: 24,
-  //   fontWeight: "bold", // Apply bold font weight
-  //   marginBottom: 10,
-  // },
-
-  slide: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    // backgroundColor: "#9DD6EB",
-  },
-  // bgImageStyle: {
-  //   justifyContent: "center",
-  //   resizeMode: "contain",
-  //   width: "100%",
-  //   height: "100%",
-  //   flex: 1,
-  // },
-
-  image: {
-    // aspectRatio: 1,
-    // width: 390,
-    // height: 390,
-    // flexGrow: 1,
-    // width: windowWidth * 0.8,
-    // height: windowHeight * 0.8,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    resizeMode: "cover",
-  },
-
-  image3: {
-    // aspectRatio: 1,
-    width: windowWidth * 0.8,
-    height: windowHeight * 0.8,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  background: {
-    flex: 1,
-    resizeMode: "cover", // or 'stretch' or 'contain'
-    justifyContent: "center", // Adjust as needed
-  },
-
-  actionBtn: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: windowWidth * 0.8,
-    gap: 16,
-  },
-
-  actionBtn1: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: windowWidth * 0.8,
-    backgroundColor: "#2B0A60",
-    borderRadius: 24,
-    paddingVertical: 16,
-    paddingHorizontal: 12,
-  },
-
-  actionBtn2: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: windowWidth * 0.8,
-    backgroundColor: "#FFFFFF",
-    borderRadius: 24,
-    paddingVertical: 16,
-    paddingHorizontal: 12,
-  },
-
-  buttonText1: {
-    color: "white",
-  },
-
-  buttonText2: {
-    color: "#17181C",
-  },
-
-  text: {
-    color: "white",
-    fontSize: 42,
-    fontWeight: "bold",
-    textAlign: "center",
-    backgroundColor: "#000000a0",
+    marginTop: 10,
   },
 });
 

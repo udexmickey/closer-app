@@ -19,10 +19,6 @@ import {
 import { styled } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-// Additional components that need to be imported separately
-// import { Picker } from "@react-native-picker/picker";
-// import Slider from "@react-native-community/slider";
-
 // For my SafeAreaView component, i will be getting it from "react-native-safe-area-context" this helps provides more options for my styles and componets useage
 export const SafeAreaViewDiv = styled(SafeAreaView);
 

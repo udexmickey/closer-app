@@ -1,6 +1,5 @@
 import { ViewDiv, TextDiv, ButtonDiv } from "nativewind.config";
 import * as React from "react";
-import { Button, Text, View } from "react-native";
 
 export interface Navigation {
   navigate: (screen: string, params?: any) => void;
@@ -8,7 +7,7 @@ export interface Navigation {
   // Add other navigation methods your app uses
 }
 
-export function LoginScreen({ navigation }: { navigation: Navigation }) {
+export function Login({ navigation }: { navigation: Navigation }) {
   return (
     <ViewDiv
       style={{ flex: 1, justifyContent: "center", alignItems: "center" }}

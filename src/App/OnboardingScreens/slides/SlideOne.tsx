@@ -1,4 +1,5 @@
 import { AuthButton } from "@/components/Buttons/Buttons";
+import useScreenHeight from "@/hooks/useScreenHeight";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { LinearGradient } from "expo-linear-gradient";
 import {
@@ -6,6 +7,7 @@ import {
   ImageBackgroundDiv,
   SafeAreaViewDiv,
   TextDiv,
+  ImageDiv,
 } from "nativewind.config";
 import React, { ReactNode } from "react";
 import { ImageSourcePropType } from "react-native";
@@ -29,72 +31,36 @@ const SlideOne: React.FC<OnboardingScreenProps> = ({
   navigation,
   ...props
 }) => {
+  const [height, width] = useScreenHeight();
+
   return (
     <ViewDiv
-      className={`w-screen max-h-screen h-full flex-1 flex items-stretch justify-end`}
+      style={{ width }}
+      className={`flex justify-end items-center bg-white`}
     >
-      <ImageBackgroundDiv
+      <ImageDiv
+        className="w-full h-full object-contain flex-[0.4] justify-center items-center bg-white"
         source={props.image}
-        accessibilityLabel={`Closer welcome banner`}
-        resizeMethod="resize"
-        resizeMode="cover"
-        className={`h-screen w-screen flex flex-1 items-center justify-end`}
+        style={[{ width: width, resizeMode: "contain" }]}
+      />
+
+      <ViewDiv
+        style={{ width: width * 0.75 }}
+        className="flex-[0.25] items-center justify-center"
       >
-        <ViewDiv
-          style={{
-            position: "absolute",
-            zIndex: 1,
-            backgroundColor: "rgba(0,0,0,0.1)",
-            bottom: 0,
-            top: 0,
-            left: 0,
-            right: 0,
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <SafeAreaViewDiv
-            className={`max-w-screen w-full max-h-screen h-full flex items-stretch justify-end ${
-              props.isLastItem ? "mb-[430px]" : "mb-72"
+        <ViewDiv>
+          <TextDiv
+            className={`text-center text-[#121212] font-bold max-w ${
+              props.isFirstItem ? "text-2xl" : "text-2xl"
             }`}
           >
-            <ViewDiv className="flex items-center justify-center gap-y-24 ">
-              <ViewDiv>
-                <TextDiv
-                  className={`text-center text-[#FFFFFF] font-bold max-w-xs ${
-                    props.isFirstItem ? "text-4xl" : "text-2xl"
-                  }`}
-                >
-                  {/* Track, Build, Achieve */}
-                  {props.title}
-                </TextDiv>
-                <TextDiv className="text-center text-gray-300 text-base max-w-[264px]">
-                  {props.description}
-                </TextDiv>
-              </ViewDiv>
-
-              {/* {OnboardButton} */}
-              {/* {props.buttonElement ? (
-                props.buttonElement
-              ) : (
-                <ViewDiv className="space-y-3 flex w-[90%]">
-                  <AuthButton
-                    content={props.buttonText}
-                    onClickButton={props.handleActionClick}
-                    isRounded={true}
-                    isLoading={undefined}
-                    isDisabled={false}
-                    textStyle="text-white text-center text-lg font-semibold"
-                    ButtonStyle="bg-[#2B0A60] w-full"
-                  />
-                </ViewDiv>
-              )} */}
-              {/* {OnboardButton} */}
-            </ViewDiv>
-          </SafeAreaViewDiv>
+            {props.title}
+          </TextDiv>
+          <TextDiv className="text-center text-[#535C6C] text-sm font-normal  mx-auto">
+            {props.description}
+          </TextDiv>
         </ViewDiv>
-      </ImageBackgroundDiv>
+      </ViewDiv>
     </ViewDiv>
   );
 };

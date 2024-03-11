@@ -79,14 +79,18 @@ const App = () => {
         screenOptions={{ headerShown: false }}
       >
         {showOnboarding ? (
-          <Stack.Screen name="Onboarding" component={OnboardingScreen} />
-        ) : isLoggedIn ? (
-          <Stack.Screen name="MainApp" component={MainApp} />
-        ) : (
           <>
-            <Stack.Screen name="Welcome" component={WelcomeScreen} />
+            <Stack.Screen name="Onboarding" component={OnboardingScreen} />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="SignupScreen" component={SignupScreen} />
+            <Stack.Screen name="MainApp" component={MainApp} />
+          </>
+        ) : (
+          // : isLoggedIn ? (
+          //   <Stack.Screen name="MainApp" component={MainApp} />
+          // )
+          <>
+            <Stack.Screen name="Welcome" component={WelcomeScreen} />
           </>
         )}
       </Stack.Navigator>

@@ -5,6 +5,8 @@ import { ViewDiv, TextDiv, ScrollViewDiv } from "nativewind.config";
 import { AuthButton } from "@/components/Buttons/Buttons";
 import SlideOne from "./slides/SlideOne";
 import Stepper from "./stepper";
+import Slides from "./slides";
+import OnBoarding from "./onBoarding";
 
 type OnboardingScreenProps = {
   navigation: StackNavigationProp<any, any>;
@@ -135,65 +137,68 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
   );
 
   return (
-    <ViewDiv
-      style={{
-        flex: 1,
-        backgroundColor: "#fff",
-        width: "100%",
-        justifyContent: "center",
-        display: "flex",
-        alignItems: "center",
-      }}
-    >
-      <ScrollViewDiv
-        horizontal
-        pagingEnabled
-        style={{ flex: 1 }}
-        // contentContainerStyle={{ flexGrow: 1 }}
-      >
-        {renderStep()}
-      </ScrollViewDiv>
-      <ViewDiv
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          width: "100%",
-          // justifyContent: "center",
-          paddingHorizontal: 20,
-          display: "flex",
-          alignItems: "center",
-          position: "absolute",
-          // top: 0,
-          right: 0,
-          left: 0,
-          bottom: !(step < totalSteps - 1) ? 50 : 70,
-        }}
-      >
-        <ViewDiv
-          className={`${
-            !(step < totalSteps - 1) ? "space-y-4" : "space-y-6"
-          } flex w-full max-w-screen-sm`}
-        >
-          <ViewDiv style={styles.stepperContainer}>
-            <Stepper currentStep={step} totalSteps={totalSteps} />
-          </ViewDiv>
-          {!(step < totalSteps - 1) ? (
-            OnboardButton
-          ) : (
-            <ViewDiv className="space-y-3 flex w-full">
-              <AuthButton
-                content={"Next"}
-                onClickButton={handleNext}
-                isRounded={true}
-                isLoading={undefined}
-                isDisabled={false}
-                textStyle="text-white text-center text-lg font-semibold"
-                ButtonStyle="bg-[#2B0A60] w-full"
-              />
-            </ViewDiv>
-          )}
-        </ViewDiv>
-      </ViewDiv>
+    // <ViewDiv
+    //   style={{
+    //     flex: 1,
+    //     backgroundColor: "#fff",
+    //     width: "100%",
+    //     justifyContent: "center",
+    //     display: "flex",
+    //     alignItems: "center",
+    //   }}
+    //   className="relative bg-green-600 hidden"
+    // >
+    //   <ViewDiv
+    //     style={{ flex: 1 }}
+    //     // contentContainerStyle={{ flexGrow: 1 }}
+    //   >
+    //     {/* {renderStep()} */}
+    //     <Slides />
+    //   </ViewDiv>
+    //   <ViewDiv
+    //     style={{
+    //       flexDirection: "row",
+    //       justifyContent: "space-between",
+    //       width: "100%",
+    //       // justifyContent: "center",
+    //       paddingHorizontal: 20,
+    //       display: "flex",
+    //       alignItems: "center",
+    //       position: "absolute",
+    //       // top: 0,
+    //       right: 0,
+    //       left: 0,
+    //       bottom: !(step < totalSteps - 1) ? 50 : 70,
+    //     }}
+    //   >
+    //     <ViewDiv
+    //       className={`${
+    //         !(step < totalSteps - 1) ? "space-y-4" : "space-y-6"
+    //       } flex w-full max-w-screen-sm`}
+    //     >
+    // <ViewDiv style={styles.stepperContainer}>
+    //   <Stepper currentStep={step} totalSteps={totalSteps} />
+    // </ViewDiv>
+    // {!(step < totalSteps - 1) ? (
+    //   OnboardButton
+    // ) : (
+    //   <ViewDiv className="space-y-3 flex w-full">
+    //     <AuthButton
+    //       content={"Next"}
+    //       onClickButton={handleNext}
+    //       isRounded={true}
+    //       isLoading={undefined}
+    //       isDisabled={false}
+    //       textStyle="text-white text-center text-lg font-semibold"
+    //       ButtonStyle="bg-[#2B0A60] w-full"
+    //     />
+    //   </ViewDiv>
+    // )}
+    //     </ViewDiv>
+    //   </ViewDiv>
+    // </ViewDiv>
+    <ViewDiv className="">
+      <OnBoarding navigation={navigation} />
     </ViewDiv>
   );
 };

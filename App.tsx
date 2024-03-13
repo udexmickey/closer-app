@@ -8,11 +8,14 @@ import OnboardingScreen from "@/App/OnboardingScreens";
 import { Login } from "@/App/Authentication/Login";
 import { SignupScreen } from "@/App/Authentication/Signup/signup";
 import { WelcomeScreen } from "@/Screens/Welcome";
+import { AppProvider, useAuth } from "@/context/authContext";
+import Navigation from "Navigation";
 
 type RootStackParamList = {
   Onboarding: {
     onboardingComplete: () => void;
     goToLogin: () => void; // Callback to navigate to login screen
+    goToSignup: () => void; // Callback to navigate to signup screen
   };
   MainApp: undefined;
   Welcome: undefined;
@@ -23,78 +26,10 @@ type RootStackParamList = {
 const Stack = createStackNavigator<RootStackParamList>();
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showOnboarding, setShowOnboarding] = useState(true);
-  const navigationRef = useRef<any>();
-
-  useEffect(() => {
-    checkAuthentication();
-  }, []);
-
-  const checkAuthentication = async () => {
-    const hasCompletedOnboarding = await AsyncStorage.getItem(
-      "hasCompletedOnboarding"
-    );
-    setShowOnboarding(!hasCompletedOnboarding);
-
-    const isAuthenticated = await AsyncStorage.getItem("isLoggedIn");
-    setIsLoggedIn(Boolean(isAuthenticated));
-  };
-
-  const handleOnboardingComplete = async () => {
-    await AsyncStorage.setItem("hasCompletedOnboarding", "true");
-    setShowOnboarding(false);
-  };
-
-  const handleLogin = async () => {
-    await AsyncStorage.setItem("isLoggedIn", "true");
-    setIsLoggedIn(true);
-  };
-
-  useEffect(() => {
-    const unsubscribe = navigationRef.current?.addListener("state", () => {
-      // Check if the current screen is Onboarding and set options accordingly
-      const routeName = navigationRef.current?.getCurrentRoute()?.name;
-      if (routeName === "Onboarding") {
-        navigationRef.current?.setOptions({
-          headerShown: false,
-          onboardingComplete: handleOnboardingComplete,
-        });
-      }
-    });
-
-    return unsubscribe;
-  }, []);
-
-  const goToLogin = () => {
-    navigationRef.current?.navigate("Login");
-  };
-
   return (
-    <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator
-        initialRouteName={
-          showOnboarding ? "Onboarding" : isLoggedIn ? "MainApp" : "Welcome"
-        }
-        screenOptions={{ headerShown: false }}
-      >
-        {showOnboarding ? (
-          <>
-            <Stack.Screen name="Onboarding" component={OnboardingScreen} />
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="SignupScreen" component={SignupScreen} />
-            <Stack.Screen name="MainApp" component={MainApp} />
-          </>
-        ) : (
-          // : isLoggedIn ? (
-          //   <Stack.Screen name="MainApp" component={MainApp} />
-          // )
-          <>
-            <Stack.Screen name="Welcome" component={WelcomeScreen} />
-          </>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <AppProvider>
+      <Navigation />
+    </AppProvider>
   );
 };
 

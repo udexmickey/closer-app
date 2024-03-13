@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   TextDiv,
   ViewDiv,
@@ -12,12 +12,19 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { Animated, Dimensions, useWindowDimensions } from "react-native";
 import Stepper from "./stepper";
 import { AuthButton } from "@/components/Buttons/Buttons";
+import { storeLocalStorageData } from "@/hooks/useLocalStorage";
 
 type OnboardingScreenProps = {
   navigation: StackNavigationProp<any, any>;
+  goToLogin: () => void; // Callback to navigate to login screen
+  goToSignup: () => void; // Callback to navigate to signup screen
 };
 
-const OnBoarding: React.FC<OnboardingScreenProps> = ({ navigation }) => {
+const OnBoarding: React.FC<OnboardingScreenProps> = ({
+  navigation,
+  goToLogin,
+  goToSignup,
+}) => {
   const [step, setStep] = useState(0);
   const totalSteps = slidersData.length;
 
@@ -33,7 +40,6 @@ const OnBoarding: React.FC<OnboardingScreenProps> = ({ navigation }) => {
   const sliderRef = useRef<any>(null);
 
   const [height, width] = useScreenHeight();
-  const { height: screenHeight } = useWindowDimensions();
 
   const handleSkip = () => {
     navigation.navigate("LoginScreen");
@@ -43,45 +49,56 @@ const OnBoarding: React.FC<OnboardingScreenProps> = ({ navigation }) => {
       setStep(step + 1);
     }
   };
+
+  // Now you can use goToLogin safely
   const handleGoToLogin = () => {
-    navigation.navigate("Login");
+    storeLocalStorageData("hasCompletedOnboarding", "true");
+    navigation.replace("Login");
   };
 
   const handleGoToSignup = () => {
-    navigation.navigate("SignupScreen");
+    storeLocalStorageData("hasCompletedOnboarding", "true");
+    navigation.replace("SignupScreen");
   };
+
+  useEffect(() => {
+    if (currentStep === totalSteps - 1) {
+      storeLocalStorageData("hasCompletedOnboarding", "true");
+    }
+  }, [currentStep]);
 
   const scrollToNext = () => {
     if (currentStep < totalSteps - 1) {
       sliderRef.current.scrollToIndex({ index: currentStep + 1 });
     } else {
+      // it won't do anything since the last screen have the login and signup buttons
       return;
     }
   };
   const OnboardButton = (
     <ViewDiv className="space-y-3 flex w-full">
+      <ViewDiv>
+        <AuthButton
+          content="Login"
+          onClickButton={handleGoToLogin}
+          isRounded={true}
+          isLoading={undefined}
+          isDisabled={false}
+          // spanRight={"Log In"}
+          spanRightStyle="text-[#FF4B83] font-medium"
+          textStyle="text-[#17181C] font-medium text-base text-center"
+          ButtonStyle="bg-white border border-[#E9EDF2]"
+        />
+      </ViewDiv>
       <ViewDiv className="text-white">
         <AuthButton
-          content="Get Started"
+          content="Sign Up"
           onClickButton={handleGoToSignup}
           isRounded={true}
           isLoading={undefined}
           isDisabled={false}
           textStyle="text-white text-center text-base font-medium"
           ButtonStyle="bg-[#FF4B83] w-full"
-        />
-      </ViewDiv>
-      <ViewDiv>
-        <AuthButton
-          content="Already have an account?"
-          onClickButton={handleGoToLogin}
-          isRounded={true}
-          isLoading={undefined}
-          isDisabled={false}
-          spanRight={"Log In"}
-          spanRightStyle="text-[#FF4B83] font-medium"
-          textStyle="text-[#17181C] font-medium text-base text-center"
-          ButtonStyle="bg-white border border-[#EBECEF]"
         />
       </ViewDiv>
     </ViewDiv>
@@ -99,8 +116,8 @@ const OnBoarding: React.FC<OnboardingScreenProps> = ({ navigation }) => {
       <ViewDiv
         style={{
           maxHeight: !(currentStep < totalSteps - 1)
-            ? height * 0.7
-            : height * 0.75,
+            ? height * 0.65
+            : height * 0.7,
           width,
           height: "100%",
         }}

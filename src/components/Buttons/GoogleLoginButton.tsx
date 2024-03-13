@@ -31,8 +31,6 @@ const GoogleLoginButton = () => {
           style={{ marginRight: 8 }}
         />
 
-        {/* <Icon name="google" size={24} color="#4285F4" /> */}
-
         <Text style={{ color: "black", fontWeight: "bold", fontSize: 16 }}>
           Log in with Google
         </Text>

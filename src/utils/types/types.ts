@@ -35,7 +35,7 @@ export interface TextAreaFieldProps {
 // Auth Button Props
 export interface AuthButtonProps {
     content: string;
-    onClickButton: () => void;
+    onClickButton: () => void | Promise<void>;
     isRounded: boolean;
     isLoading: any;
     spanRight?: any;

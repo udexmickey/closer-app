@@ -11,20 +11,23 @@ import * as SecureStore from "expo-secure-store";
 type Action =
   | { type: "RESTORE_TOKEN"; token: string | null }
   | { type: "SIGN_IN"; token: string }
-  | { type: "SIGN_OUT" };
+  | { type: "SIGN_OUT" }
+  | { type: "SET_COMPLETED"; value: boolean }; // New action type for setting onboarding completion
 
 type State = {
   isLoading: boolean;
   isSignout: boolean;
   userToken: string | null;
+  hasCompletedOnbarding: boolean; // New state for tracking onboarding completion
 };
 
 type AuthContextType = {
   state: State;
   authContext: {
-    signIn: () => void;
-    signOut: () => void;
+    signIn: () => Promise<void>;
+    signOut: () => Promise<void>;
     signUp: () => void;
+    setOnboardingCompleted: (value: boolean) => void;
   };
 };
 
@@ -39,6 +42,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     isLoading: true,
     isSignout: false,
     userToken: null,
+    hasCompletedOnbarding: false, // Initialize onboarding completion state
   };
 
   const [state, dispatch] = useReducer((prevState: State, action: Action) => {
@@ -61,6 +65,11 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
           isSignout: true,
           userToken: null,
         };
+      case "SET_COMPLETED":
+        return {
+          ...prevState,
+          hasCompletedOnbarding: action.value,
+        };
       default:
         return prevState;
     }
@@ -69,47 +78,53 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   useEffect(() => {
     const bootstrapAsync = async () => {
       let userToken: string | null;
+      let hasCompletedOnboarding: boolean;
 
       try {
         userToken = await SecureStore.getItemAsync("userToken");
+        hasCompletedOnboarding =
+          (await SecureStore.getItemAsync("hasCompletedOnbarding")) === "true";
       } catch (e) {
         userToken = null;
+        hasCompletedOnboarding = false;
       }
 
       dispatch({ type: "RESTORE_TOKEN", token: userToken });
+      dispatch({ type: "SET_COMPLETED", value: hasCompletedOnboarding });
     };
 
-    bootstrapAsync();
+    const timer = setTimeout(() => {
+      bootstrapAsync();
+    }, 4000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const authContext = useMemo(
     () => ({
       signIn: async () => {
-        if (state.userToken) {
-          // A user is already signed in, don't sign in again
-          return;
-        }
-
         // Perform actual sign-in logic here
-        try {
-          // Simulate asynchronous sign-in process (replace with actual logic)
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-
-          // Set the user token after successful sign-in
-          const token = "dummy-auth-token"; // Replace with actual token obtained from sign-in
-          dispatch({ type: "SIGN_IN", token });
-        } catch (error) {
-          console.error("Sign-in failed:", error);
-          // Handle sign-in failure if needed
-        }
+        const token = "dummy-auth-token"; // Replace with actual token obtained from sign-in
+        dispatch({ type: "SIGN_IN", token });
+        await SecureStore.setItemAsync("userToken", token);
+        await SecureStore.setItemAsync("hasCompletedOnbarding", "true");
       },
-      signOut: () => dispatch({ type: "SIGN_OUT" }),
-      signUp: () => {
+      signOut: async () => {
+        // Perform actual sign-out logic here
+        dispatch({ type: "SIGN_OUT" });
+        await SecureStore.deleteItemAsync("userToken");
+      },
+      signUp: async () => {
         // Logic for signing up
-        dispatch({ type: "SIGN_IN", token: "dummy-auth-token" }); // Dummy logic for sign-up, replace with actual logic
+        const token = "dummy-auth-token"; // Dummy logic for sign-up, replace with actual logic
+        dispatch({ type: "SIGN_IN", token });
+        SecureStore.setItemAsync("userToken", token);
+        await SecureStore.setItemAsync("hasCompletedOnbarding", "true");
       },
+      setOnboardingCompleted: async (value: boolean) =>
+        dispatch({ type: "SET_COMPLETED", value }),
     }),
-    [state.userToken]
+    []
   );
 
   const value = { state, authContext };

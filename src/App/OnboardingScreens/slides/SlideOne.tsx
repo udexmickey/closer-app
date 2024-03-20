@@ -16,7 +16,6 @@ type OnboardingScreenProps = {
   navigation: StackNavigationProp<any, any>;
   image: ImageSourcePropType | undefined;
   buttonText: string;
-  handleSkip: () => void;
   handleActionClick: () => void;
   description: string;
   title: string;

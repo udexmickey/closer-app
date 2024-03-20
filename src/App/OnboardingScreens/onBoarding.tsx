@@ -13,6 +13,7 @@ import { Animated } from "react-native";
 import Stepper from "./stepper";
 import { AuthButton } from "@/components/Buttons/Buttons";
 import { storeLocalStorageData } from "@/hooks/useLocalStorage";
+import { useAuth } from "@/context/authContext";
 
 type OnboardingScreenProps = {
   navigation: StackNavigationProp<any, any>;
@@ -35,24 +36,22 @@ const OnBoarding: React.FC<OnboardingScreenProps> = ({ navigation }) => {
 
   const [height, width] = useScreenHeight();
 
-  const handleSkip = () => {
-    navigation.navigate("LoginScreen");
-  };
-  const handleNext = () => {
-    if (step < totalSteps - 1) {
-      setStep(step + 1);
-    }
-  };
+  const { authContext } = useAuth();
 
   // Now you can use goToLogin safely
   const handleGoToLogin = () => {
-    storeLocalStorageData("hasCompletedOnboarding", "true");
-    navigation.replace("Login");
+    authContext.setOnboardingCompleted(true);
+
+    setTimeout(() => {
+      navigation.replace("Login");
+    }, 2000); // Adjust the delay time as needed (in milliseconds)
   };
 
   const handleGoToSignup = () => {
-    storeLocalStorageData("hasCompletedOnboarding", "true");
-    navigation.replace("SignupScreen");
+    authContext.setOnboardingCompleted(true);
+    setTimeout(() => {
+      navigation.replace("SignupScreen");
+    }, 2000); // Adjust the delay time as needed (in milliseconds)
   };
 
   useEffect(() => {
@@ -124,7 +123,6 @@ const OnBoarding: React.FC<OnboardingScreenProps> = ({ navigation }) => {
               title={item?.title}
               description={item?.description}
               navigation={navigation}
-              handleSkip={handleSkip}
               handleActionClick={handleGoToLogin}
               buttonElement={undefined}
               buttonText={"Next"}

@@ -1,15 +1,8 @@
 import { AuthButton } from "@/components/Buttons/Buttons";
 import GoogleLoginButton from "@/components/Buttons/GoogleLoginButton";
-import CheckboxInput from "@/components/inputs/CheckBoxInput";
 import CustomTextInput from "@/components/inputs/TextInput";
 import { useAuth } from "@/context/authContext";
-import {
-  ViewDiv,
-  PressableDiv,
-  ButtonDiv,
-  TextInputDiv,
-  TextDiv,
-} from "nativewind.config";
+import { ViewDiv, PressableDiv, TextDiv } from "nativewind.config";
 import * as React from "react";
 import {
   TouchableWithoutFeedback,
@@ -27,12 +20,6 @@ export interface Navigation {
 export function Login({ navigation }: { navigation: Navigation }) {
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
-
-  const [isRemembered, setIsRemembered] = React.useState<boolean>(false);
-
-  const handlePress = () => {
-    setIsRemembered(!isRemembered);
-  };
 
   const { authContext } = useAuth();
 

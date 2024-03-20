@@ -1,6 +1,8 @@
 import React from "react";
 import { ViewDiv, TextDiv, ImageDiv } from "nativewind.config";
 import { AuthButton } from "@/components/Buttons/Buttons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAuth } from "@/context/authContext";
 
 interface SymptomsCreatedScreenProps {
   navigation: any;
@@ -9,6 +11,18 @@ interface SymptomsCreatedScreenProps {
 const SymptomsCreatedScreen: React.FC<SymptomsCreatedScreenProps> = ({
   navigation,
 }) => {
+  const { authContext } = useAuth();
+
+  const handleCompleteOnboarding = () => {
+    // Call the setOnboardingCompleted method to update the hascompleted state
+    authContext.setOnboardingCompleted(true);
+    authContext.signIn();
+
+    setTimeout(() => {
+      navigation.replace("MainApp");
+    }, 2000);
+  };
+
   return (
     <ViewDiv className="justify-around items-center h-full px-8">
       <ViewDiv className="w-full justify-center items-center flex-[.4]">
@@ -26,9 +40,7 @@ const SymptomsCreatedScreen: React.FC<SymptomsCreatedScreenProps> = ({
       <ViewDiv className="flex w-full gap-y-4">
         <AuthButton
           content={"Continue"}
-          onClickButton={() => {
-            navigation.navigate("OneStepCloserScreen");
-          }}
+          onClickButton={handleCompleteOnboarding}
           isRounded={true}
           isLoading={undefined}
           isDisabled={false}

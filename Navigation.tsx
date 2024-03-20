@@ -4,15 +4,21 @@ import { createStackNavigator } from "@react-navigation/stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import MainApp from "@/App/MainApp";
-import OnboardingScreen from "@/App/OnboardingScreens";
 import { Login } from "@/App/Authentication/Login";
 import { SignupScreen } from "@/App/Authentication/Signup/signup";
-import { WelcomeScreen } from "@/Screens/Welcome";
-import { useAuth } from "@/context/authContext";
+import { SplashScreen } from "@/Screens/Welcome";
 import { ForgetPassword } from "@/App/Authentication/ForgetPassword";
 import { TextDiv, TouchableOpacityDiv, ViewDiv } from "nativewind.config";
 import { AntDesign } from "@expo/vector-icons";
 import { ResetPassword } from "@/App/Authentication/ResetPassword";
+import Policy from "@/App/Authentication/Policy";
+import Terms from "@/App/Authentication/Terms";
+import AccountCreatedScreen from "@/App/OnboardingScreens/AccountCreatedScreen";
+import AddSymptom from "@/App/OnboardingScreens/AddSymptom";
+import OneStepCloserScreen from "@/App/OnboardingScreens/OneStepCloserScreen";
+import { OtpScreen } from "@/App/OnboardingScreens/OtpScreen";
+import OnboardingScreen from "@/App/OnboardingScreens";
+import SymptomsCreatedScreen from "@/App/OnboardingScreens/SymptomsCreatedScreen";
 
 type RootStackParamList = {
   Onboarding: {
@@ -26,6 +32,13 @@ type RootStackParamList = {
   SignupScreen: undefined;
   ForgetPassword: undefined;
   ResetPassword: undefined;
+  Terms: undefined;
+  Policy: undefined;
+  OtpScreen: undefined;
+  AccountCreatedScreen: undefined;
+  OneStepCloserScreen: undefined;
+  AddSymptom: undefined;
+  SymptomsCreatedScreen: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -59,7 +72,7 @@ const Navigation = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 4000);
 
     (async () => {
       await AsyncStorage.clear();
@@ -108,11 +121,15 @@ const Navigation = () => {
       >
         {/* when the Navigation first loads it renders the loading screen */}
         {isLoading ? (
-          <Stack.Screen name="Welcome" component={WelcomeScreen} />
+          <Stack.Screen name="Welcome" component={SplashScreen} />
         ) : // when the onboarding is not completed it renders the onboarding screen
         viewedOnboarding ? (
           <>
-            <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+            <Stack.Screen
+              name="Onboarding"
+              component={OnboardingScreen}
+              // component={SplashScreen}
+            />
           </>
         ) : (
           // when the onboarding is completed and the user is logged in it renders the main Navigation
@@ -130,7 +147,18 @@ const Navigation = () => {
               headerShown: true, // Override headerShown to true for ForgetPassword screen
             })}
           />
-          <Stack.Screen name="SignupScreen" component={SignupScreen} />
+          <Stack.Screen
+            name="SignupScreen"
+            component={SignupScreen}
+            options={({ navigation }) => ({
+              title: "Create Your Account",
+              headerLeft: () => (
+                <BackArrow onPress={() => navigation.replace("Login")} />
+              ),
+              headerTitle: "Create Your Account",
+              headerShown: true, // Override headerShown to true for ForgetPassword screen
+            })}
+          />
           <Stack.Screen
             name="ForgetPassword"
             component={ForgetPassword}
@@ -153,6 +181,90 @@ const Navigation = () => {
               ),
               headerTitle: "Set Your New Password",
               headerShown: true, // Override headerShown to true for ForgetPassword screen
+            })}
+          />
+          <Stack.Screen
+            name="Terms"
+            component={Terms}
+            options={({ navigation }) => ({
+              title: "Terms of Service",
+              headerLeft: () => (
+                <BackArrow onPress={() => navigation.goBack()} />
+              ),
+              headerTitle: "Terms of Service",
+              headerShown: true, // Override headerShown to true for ForgetPassword screen
+            })}
+          />
+          <Stack.Screen
+            name="Policy"
+            component={Policy}
+            options={({ navigation }) => ({
+              title: "Privacy Policy",
+              headerLeft: () => (
+                <BackArrow onPress={() => navigation.goBack()} />
+              ),
+              headerTitle: "Privacy Policy",
+              headerShown: true, // Override headerShown to true for ForgetPassword screen
+            })}
+          />
+          <Stack.Screen
+            name="OtpScreen"
+            component={OtpScreen}
+            options={({ navigation }) => ({
+              title: "OTP Verification",
+              headerLeft: () => (
+                <BackArrow onPress={() => navigation.goBack()} />
+              ),
+              headerTitle: "OTP Verification",
+              headerShown: true, // Override headerShown to true for ForgetPassword screen
+            })}
+          />
+          <Stack.Screen
+            name="AccountCreatedScreen"
+            component={AccountCreatedScreen}
+            options={({ navigation }) => ({
+              title: " ",
+              headerLeft: () => (
+                <BackArrow onPress={() => navigation.goBack()} />
+              ),
+              headerTitle: " ",
+              headerShown: false, // Override headerShown to true for ForgetPassword screen
+            })}
+          />
+          <Stack.Screen
+            name="OneStepCloserScreen"
+            component={OneStepCloserScreen}
+            options={({ navigation }) => ({
+              title: "One Step Closer",
+              headerLeft: () => (
+                <BackArrow onPress={() => navigation.goBack()} />
+              ),
+              headerTitle: "One Step Closer",
+              headerShown: true, // Override headerShown to true for ForgetPassword screen
+            })}
+          />
+          <Stack.Screen
+            name="AddSymptom"
+            component={AddSymptom}
+            options={({ navigation }) => ({
+              title: "Add Symptom",
+              headerLeft: () => (
+                <BackArrow onPress={() => navigation.goBack()} />
+              ),
+              headerTitle: "Add Symptom",
+              headerShown: true, // Override headerShown to true for ForgetPassword screen
+            })}
+          />
+          <Stack.Screen
+            name="SymptomsCreatedScreen"
+            component={SymptomsCreatedScreen}
+            options={({ navigation }) => ({
+              title: " ",
+              headerLeft: () => (
+                <BackArrow onPress={() => navigation.goBack()} />
+              ),
+              headerTitle: " ",
+              headerShown: false, // Override headerShown to true for ForgetPassword screen
             })}
           />
         </>

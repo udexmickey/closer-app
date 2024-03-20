@@ -35,7 +35,7 @@ const SlideThree: React.FC<OnboardingScreenProps> = ({
     >
       <ImageBackgroundDiv
         source={props.image}
-        accessibilityLabel={`Closer welcome banner`}
+        accessibilityLabel={`Closer splashbanner`}
         resizeMethod="resize"
         resizeMode="cover"
         className={`h-screen w-screen flex flex-1 items-center justify-end`}

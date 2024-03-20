@@ -9,22 +9,16 @@ import useScreenHeight from "@/hooks/useScreenHeight";
 import { slidersData } from "./slidersDatas";
 import SlideOne from "./slides/SlideOne";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Animated, Dimensions, useWindowDimensions } from "react-native";
+import { Animated } from "react-native";
 import Stepper from "./stepper";
 import { AuthButton } from "@/components/Buttons/Buttons";
 import { storeLocalStorageData } from "@/hooks/useLocalStorage";
 
 type OnboardingScreenProps = {
   navigation: StackNavigationProp<any, any>;
-  goToLogin: () => void; // Callback to navigate to login screen
-  goToSignup: () => void; // Callback to navigate to signup screen
 };
 
-const OnBoarding: React.FC<OnboardingScreenProps> = ({
-  navigation,
-  goToLogin,
-  goToSignup,
-}) => {
+const OnBoarding: React.FC<OnboardingScreenProps> = ({ navigation }) => {
   const [step, setStep] = useState(0);
   const totalSteps = slidersData.length;
 

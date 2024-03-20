@@ -1,4 +1,4 @@
-import { WelcomeScreen } from "@/Screens/Welcome";
+import { SplashScreen } from "@/Screens/Welcome";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { CalenderScreen } from "@/Screens/Calender";
 import { RingScreen } from "@/Screens/Ring";
@@ -36,7 +36,7 @@ export function MyDrawer() {
       />
       <Drawer.Screen
         name="Welcome"
-        component={WelcomeScreen}
+        component={SplashScreen}
         options={{ drawerLabel: "Welcome" }}
       />
     </Drawer.Navigator>

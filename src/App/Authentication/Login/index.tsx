@@ -50,10 +50,6 @@ export function Login({ navigation }: { navigation: Navigation }) {
           className={`flex-1 w-full items-center justify-start bg-white`}
         >
           <ViewDiv className={`px-4 w-full max-w-sm mt-8`}>
-            {/* <TextDiv className={`text-5xl font-bold mb-6 text-[#FF4B83]`}>
-              Login
-            </TextDiv> */}
-
             <>
               <GoogleLoginButton />
 
@@ -71,11 +67,6 @@ export function Login({ navigation }: { navigation: Navigation }) {
                   or log in with email
                 </TextDiv>
               </ViewDiv>
-              {/* <TextDiv className={"text-gray-500 text-center mb-4"}>
-                Deliver great service experiences fast - without the complexity
-                of traditional ITSM solutions. Accelerate critical development
-                work, eliminate toil.
-              </TextDiv> */}
             </>
 
             <ViewDiv className={`flex flex-col gap-4`}>
@@ -105,13 +96,6 @@ export function Login({ navigation }: { navigation: Navigation }) {
             <ViewDiv
               className={`flex flex-row justify-between items-center my-8`}
             >
-              <ViewDiv className={`flex-row items-center`}>
-                <CheckboxInput
-                  title="Remember me"
-                  checked={isRemembered}
-                  onPress={handlePress}
-                />
-              </ViewDiv>
               <PressableDiv
                 className={`text-[#FF4B83] font-medium text-xs ml-auto`}
               >

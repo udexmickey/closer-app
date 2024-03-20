@@ -14,6 +14,7 @@ interface CustomTextInputProps {
   onChangeText: (text: string) => void;
   placeholder: string;
   secureTextEntry?: boolean;
+  maxLength?: number;
 }
 
 const CustomTextInput: React.FC<CustomTextInputProps> = ({
@@ -23,6 +24,7 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
   onChangeText,
   placeholder,
   secureTextEntry = false,
+  maxLength,
 }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
 
@@ -52,7 +54,14 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
           }
           className={`w-full ring-2 border-solid border-2 p-4 rounded-xl border-[#E9EDF2] relative`}
           style={{ flex: 1 }}
-          keyboardType={type === "email" ? "email-address" : "default"} // Set keyboardType based on type
+          keyboardType={
+            type === "number"
+              ? "numeric"
+              : type === "email"
+              ? "email-address"
+              : "default"
+          } // Set keyboardType based on type
+          maxLength={maxLength}
         />
         {type === "password" && (
           <TouchableOpacityDiv

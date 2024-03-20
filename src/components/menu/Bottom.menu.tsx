@@ -1,4 +1,4 @@
-import { WelcomeScreen } from "@/Screens/Welcome";
+import { SplashScreen } from "@/Screens/Welcome";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { CalenderScreen } from "@/Screens/Calender";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -48,7 +48,7 @@ export function MenuBottom() {
         tabBarInactiveTintColor: "#747A8B",
       })}
     >
-      {/* <Tab.Screen name="Welcome" component={WelcomeScreen} /> */}
+      {/* <Tab.Screen name="Welcome" component={SplashScreen} /> */}
       <Tab.Screen
         name="Home"
         component={HomeScreen}

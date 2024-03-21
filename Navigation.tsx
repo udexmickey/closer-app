@@ -48,12 +48,6 @@ const Navigation = () => {
 
   const navigationRef = useRef<any>();
 
-  useEffect(() => {
-    console.log("state.isLoading", state.isLoading);
-    console.log("state.hasCompletedOnbarding", state.hasCompletedOnbarding);
-    console.log("state.userToken", state.userToken);
-  }, [state]);
-
   const BackArrow = ({ onPress }: { onPress?: () => void }) => (
     <TouchableOpacityDiv
       onPress={onPress}

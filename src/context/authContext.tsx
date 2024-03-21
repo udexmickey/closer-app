@@ -113,6 +113,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         // Perform actual sign-out logic here
         dispatch({ type: "SIGN_OUT" });
         await SecureStore.deleteItemAsync("userToken");
+
+        //Since we are still testing the authentication let me put this to clear the stored hasCompletedOnbarding value
+        await SecureStore.deleteItemAsync("hasCompletedOnbarding");
       },
       signUp: async () => {
         // Logic for signing up

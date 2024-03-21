@@ -13,13 +13,14 @@ export function HomeScreen({ navigation }: { navigation: Navigation }) {
         justifyContent: "center",
         alignItems: "center",
         paddingHorizontal: 20,
+        gap: 20,
       }}
     >
-      <Text>Home screen</Text>
-      <Button
+      <Text>Welcome to Home screen</Text>
+      {/* <Button
         title="Go to Details"
         onPress={() => navigation.navigate("Details")}
-      />
+      /> */}
       <AuthButton
         content={"LogOut"}
         onClickButton={() => authContext.signOut()}

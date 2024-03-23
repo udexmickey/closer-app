@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -48,10 +48,16 @@ const Navigation = () => {
 
   const navigationRef = useRef<any>();
 
-  const BackArrow = ({ onPress }: { onPress?: () => void }) => (
+  const BackArrow = ({
+    onPress,
+    backLabel,
+  }: {
+    onPress?: () => void;
+    backLabel?: string;
+  }) => (
     <TouchableOpacityDiv
       onPress={onPress}
-      className="flex items-center justify-center w-32 h-12"
+      className="flex items-center justify-center"
     >
       <ViewDiv className="flex items-center justify-center text-center">
         <TextDiv
@@ -64,7 +70,7 @@ const Navigation = () => {
             color="#000000"
             style={{ fontWeight: "600" }}
           />
-          {/* {` `} Login */}
+          <TextDiv>{backLabel}</TextDiv>
         </TextDiv>
       </ViewDiv>
     </TouchableOpacityDiv>
@@ -105,7 +111,7 @@ const Navigation = () => {
               component={Login}
               options={({ navigation }) => ({
                 title: "Login",
-                headerLeft: () => <BackArrow />,
+                headerLeft: () => <BackArrow backLabel="" />,
                 headerTitle: "Login",
                 headerShown: true, // Override headerShown to true for ForgetPassword screen
               })}
@@ -116,7 +122,10 @@ const Navigation = () => {
               options={({ navigation }) => ({
                 title: "Create Your Account",
                 headerLeft: () => (
-                  <BackArrow onPress={() => navigation.replace("Login")} />
+                  <BackArrow
+                    onPress={() => navigation.replace("Login")}
+                    backLabel=""
+                  />
                 ),
                 headerTitle: "Create Your Account",
                 headerShown: true, // Override headerShown to true for ForgetPassword screen

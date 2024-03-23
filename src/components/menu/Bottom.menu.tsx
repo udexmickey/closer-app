@@ -1,11 +1,10 @@
 import { CalenderScreen } from "@/Screens/Calender";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { ProfileScreen } from "@/Screens/Profile";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { SelfCareScreen } from "@/Screens/SelfCare";
 import { HomeScreen } from "@/Screens/Home";
 import { StyleProp, TextStyle } from "react-native";
-import { MyDrawer } from "./drawer.menu";
+import MarketPlaceScreen from "@/Screens/MarketPlace";
 
 const Tab = createBottomTabNavigator();
 
@@ -28,8 +27,8 @@ export function MenuBottom() {
             iconName = focused ? "calendar" : "calendar-outline";
           } else if (route.name === "SelfCare") {
             iconName = focused ? "person" : "person-outline";
-          } else if (route.name === "Profile") {
-            iconName = focused ? "person-circle" : "person-circle-outline";
+          } else if (route.name === "MarketPlace") {
+            iconName = focused ? "stats-chart" : "stats-chart-outline";
           }
 
           // You can define your custom style for focused icon here
@@ -80,6 +79,7 @@ export function MenuBottom() {
         name="Calendar"
         component={CalenderScreen}
         options={{
+          headerShown: false,
           tabBarLabel: "Calendar",
           tabBarItemStyle: { paddingTop: 10 }, //use This for Icon or image
           tabBarLabelStyle: { paddingBottom: 10 }, // use This for lable
@@ -89,6 +89,7 @@ export function MenuBottom() {
         name="Menu"
         component={SelfCareScreen}
         options={{
+          headerShown: false,
           tabBarLabel: "",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="add-circle" color={"#FF4B83"} size={62} />
@@ -99,6 +100,7 @@ export function MenuBottom() {
         name="SelfCare"
         component={SelfCareScreen}
         options={{
+          headerShown: false,
           tabBarLabel: "Self Care",
           tabBarItemStyle: { paddingTop: 10 }, //use This for Icon or image
           tabBarLabelStyle: { paddingBottom: 10 }, // use This for lable
@@ -106,10 +108,11 @@ export function MenuBottom() {
       />
 
       <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
+        name="MarketPlace"
+        component={MarketPlaceScreen}
         options={{
-          tabBarLabel: "Marketplace",
+          headerShown: false,
+          tabBarLabel: "MarketPlace",
           tabBarItemStyle: { paddingTop: 10 }, //use This for Icon or image
           tabBarLabelStyle: { paddingBottom: 10 }, // use This for lable
         }}

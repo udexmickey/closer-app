@@ -33,11 +33,11 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-interface AppProviderProps {
+interface AuthProviderProps {
   children: ReactNode;
 }
 
-export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const initialState: State = {
     isLoading: true,
     isSignout: false,
@@ -138,7 +138,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AppProvider");
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };

@@ -31,7 +31,7 @@ export function MyDrawer() {
 
   return (
     <Drawer.Navigator
-      initialRouteName="Home"
+      initialRouteName="MenuBottom"
       screenOptions={{ drawerPosition: "left" }}
     >
       <Drawer.Screen

@@ -1,23 +1,31 @@
 import { View, Button, Text } from "react-native";
 import { Navigation } from "../../App/Authentication/Login";
 import { ButtonDiv, TextDiv, ViewDiv } from "nativewind.config";
+import { Drawer } from "react-native-paper";
+import React from "react";
 
 export function CalenderScreen({ navigation }: { navigation: Navigation }) {
+  const [active, setActive] = React.useState("");
+
   return (
-    <ViewDiv
-      style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-    >
-      <TextDiv>Calender screen</TextDiv>
-      <ButtonDiv
-        title="Go to Details"
-        onPress={() => navigation.navigate("Details")}
-        className="bg-red-500 ring-white border-none text-green-500"
+    // <Drawer.CollapsedItem
+    //   focusedIcon="inbox"
+    //   unfocusedIcon="inbox-outline"
+    //   label="Inbox"
+    // >
+    <Drawer.Section title="Some title">
+      <Drawer.Item
+        label="search"
+        active={active === "search"}
+        icon="calendar"
+        onPress={() => setActive("search")}
       />
-      <ViewDiv className="bg-white">
-        <TextDiv className="text-red-500">
-          The test for tailwind in Calender screen
-        </TextDiv>
-      </ViewDiv>
-    </ViewDiv>
+      <Drawer.Item
+        label="Second Item"
+        active={active === "second"}
+        onPress={() => setActive("second")}
+      />
+    </Drawer.Section>
+    // </Drawer.CollapsedItem>
   );
 }

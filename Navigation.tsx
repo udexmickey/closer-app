@@ -76,6 +76,31 @@ const Navigation = () => {
     </TouchableOpacityDiv>
   );
 
+  const symptomsRoute = (
+    <>
+      <Stack.Screen
+        name="AddSymptom"
+        component={AddSymptom}
+        options={({ navigation }) => ({
+          title: "Add Symptom",
+          headerLeft: () => <BackArrow onPress={() => navigation.goBack()} />,
+          headerTitle: "Add Symptom",
+          headerShown: true, // Override headerShown to true for ForgetPassword screen
+        })}
+      />
+      <Stack.Screen
+        name="SymptomsCreatedScreen"
+        component={SymptomsCreatedScreen}
+        options={({ navigation }) => ({
+          title: " ",
+          headerLeft: () => <BackArrow onPress={() => navigation.goBack()} />,
+          headerTitle: " ",
+          headerShown: false, // Override headerShown to true for ForgetPassword screen
+        })}
+      />
+    </>
+  );
+
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
@@ -88,14 +113,22 @@ const Navigation = () => {
             ? "MainApp"
             : "Welcome"
         }
-        screenOptions={{ headerShown: false }}
+        screenOptions={{
+          headerShown: false,
+          headerStyle: {
+            backgroundColor: "#FF4B83",
+          },
+        }}
       >
         {/* when the Navigation first loads it renders the loading screen */}
         {state.isLoading ? (
           <Stack.Screen name="Welcome" component={SplashScreen} />
         ) : // when the onboarding is not completed it renders the onboarding screen
         state.userToken ? (
-          <Stack.Screen name="MainApp" component={MainApp} />
+          <>
+            <Stack.Screen name="MainApp" component={MainApp} />
+            {symptomsRoute}
+          </>
         ) : // when the onboarding is completed and the user is logged in it renders the main Navigation
         !state.hasCompletedOnbarding ? (
           <Stack.Screen
@@ -215,30 +248,7 @@ const Navigation = () => {
                 headerShown: true, // Override headerShown to true for ForgetPassword screen
               })}
             />
-            <Stack.Screen
-              name="AddSymptom"
-              component={AddSymptom}
-              options={({ navigation }) => ({
-                title: "Add Symptom",
-                headerLeft: () => (
-                  <BackArrow onPress={() => navigation.goBack()} />
-                ),
-                headerTitle: "Add Symptom",
-                headerShown: true, // Override headerShown to true for ForgetPassword screen
-              })}
-            />
-            <Stack.Screen
-              name="SymptomsCreatedScreen"
-              component={SymptomsCreatedScreen}
-              options={({ navigation }) => ({
-                title: " ",
-                headerLeft: () => (
-                  <BackArrow onPress={() => navigation.goBack()} />
-                ),
-                headerTitle: " ",
-                headerShown: false, // Override headerShown to true for ForgetPassword screen
-              })}
-            />
+            {symptomsRoute}
           </>
         )}
       </Stack.Navigator>

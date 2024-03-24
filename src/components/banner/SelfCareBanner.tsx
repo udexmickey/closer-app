@@ -7,22 +7,20 @@ import {
 } from "nativewind.config";
 import { ImageSourcePropType } from "react-native";
 
-type headerBannerType = {
-  visible: boolean;
+type selfCareBannerType = {
   user: string;
   phase: string;
   description: string;
-  backgroundImage: string;
+  // backgroundImage: string;
   backgroundColor: string;
   phaseColor: string;
 };
 
-const HeaderBanner: React.FC<headerBannerType> = ({
-  visible,
+const SelfCareBanner: React.FC<selfCareBannerType> = ({
   user,
   phase,
   description,
-  backgroundImage,
+  // backgroundImage,
   backgroundColor,
   phaseColor,
 }) => {
@@ -34,8 +32,14 @@ const HeaderBanner: React.FC<headerBannerType> = ({
           backgroundColor: backgroundColor ?? "#FFF7FA",
         }}
       >
-        <ViewDiv className="flex flex-col max-w-md w-full gap-y-24">
-          <ImageBackgroundDiv
+        <ViewDiv className="flex flex-col w-full gap-y-24 max-w-sm">
+          <ViewDiv
+            className={`w-full h-64 bg-["#FFF7FA"] gap-y-6 items-center justify-start`}
+            style={{
+              backgroundColor: backgroundColor,
+            }}
+          >
+            {/* <ImageBackgroundDiv
             resizeMethod="resize"
             resizeMode="cover"
             source={backgroundImage as ImageSourcePropType}
@@ -43,33 +47,31 @@ const HeaderBanner: React.FC<headerBannerType> = ({
             style={{
               backgroundColor: backgroundColor,
             }}
-          >
+          > */}
             <TextDiv className="capitalize text-[#62565A] text-base max-w-md w-full font-medium">
               Hello {user ?? "Adenike"},{" "}
             </TextDiv>
-            <ViewDiv className="text-lg max-w-md w-full flex-col">
-              <TextDiv className="text-[#000000] text-3xl font-semibold max-w-full w-[65%]">
-                You’re in your
-              </TextDiv>
+            <ViewDiv className="text-lg max-w-sm w-full flex-col">
               <TextDiv
                 className={`capitalize text-[${
                   phaseColor ?? "#FF4B83"
-                }] text-3xl font-semibold max-w-full w-[75%]`}
+                }] text-4xl font-semibold max-w-full w-[75%] pb-4`}
                 style={{
                   color: phaseColor || "#FF4B83",
                 }}
               >
-                {(visible && phase + " Phase. ") ?? "Ovulatory Phase."}
+                {phase ?? "Transform Your Cycle"}
               </TextDiv>
-              <TextDiv className="capitalize text-[#62565A] text-sm max-w-md w-[65%] mt-2">
+              <TextDiv className="capitalize text-[#54575D] text-sm max-w-md w-[65%] mt-2">
                 {description ?? "Connect, Harness Your Social Superpowers 🚀"}
               </TextDiv>
             </ViewDiv>
-          </ImageBackgroundDiv>
+            {/* </ImageBackgroundDiv> */}
+          </ViewDiv>
         </ViewDiv>
       </ViewDiv>
     </ViewDiv>
   );
 };
 
-export default HeaderBanner;
+export default SelfCareBanner;

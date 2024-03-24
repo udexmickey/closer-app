@@ -1,6 +1,6 @@
 import { AuthButton } from "@/components/Buttons/Buttons";
 import { useAuth } from "@/context/authContext";
-import { ViewDiv } from "nativewind.config";
+import { ImageDiv, TextDiv, ViewDiv } from "nativewind.config";
 import React from "react";
 
 const MarketPlaceScreen = () => {
@@ -11,19 +11,19 @@ const MarketPlaceScreen = () => {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        paddingHorizontal: 20,
-        gap: 20,
+        width: "100%",
       }}
+      className="bg-white mx-auto"
     >
-      <AuthButton
-        content={"LogOut"}
-        onClickButton={() => authContext.signOut()}
-        isRounded={true}
-        isLoading={undefined}
-        isDisabled={false}
-        textStyle="text-white text-center text-lg font-semibold"
-        ButtonStyle="bg-[#FF4B83] w-full"
+      <ImageDiv
+        className="w-full h-full object-contain max-w-[150px] max-h-[150px] mx-auto"
+        resizeMode="contain"
+        resizeMethod="resize"
+        source={require("../../assets/images/coming-soon.png")}
       />
+      <TextDiv className="text-[#535C6C] text-base text-center font-semibold mt-2">
+        Coming Soon
+      </TextDiv>
     </ViewDiv>
   );
 };

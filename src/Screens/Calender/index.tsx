@@ -1,31 +1,31 @@
-import { View, Button, Text } from "react-native";
 import { Navigation } from "../../App/Authentication/Login";
-import { ButtonDiv, TextDiv, ViewDiv } from "nativewind.config";
-import { Drawer } from "react-native-paper";
+import { ViewDiv } from "nativewind.config";
+import { AuthButton } from "@/components/Buttons/Buttons";
+import { useAuth } from "@/context/authContext";
 import React from "react";
 
 export function CalenderScreen({ navigation }: { navigation: Navigation }) {
-  const [active, setActive] = React.useState("");
+  const { authContext } = useAuth();
 
   return (
-    // <Drawer.CollapsedItem
-    //   focusedIcon="inbox"
-    //   unfocusedIcon="inbox-outline"
-    //   label="Inbox"
-    // >
-    <Drawer.Section title="Some title">
-      <Drawer.Item
-        label="search"
-        active={active === "search"}
-        icon="calendar"
-        onPress={() => setActive("search")}
+    <ViewDiv
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        paddingHorizontal: 20,
+        gap: 20,
+      }}
+    >
+      <AuthButton
+        content={"LogOut"}
+        onClickButton={() => authContext.signOut()}
+        isRounded={true}
+        isLoading={undefined}
+        isDisabled={false}
+        textStyle="text-white text-center text-lg font-semibold"
+        ButtonStyle="bg-[#FF4B83] w-full"
       />
-      <Drawer.Item
-        label="Second Item"
-        active={active === "second"}
-        onPress={() => setActive("second")}
-      />
-    </Drawer.Section>
-    // </Drawer.CollapsedItem>
+    </ViewDiv>
   );
 }

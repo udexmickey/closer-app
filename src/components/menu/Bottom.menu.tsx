@@ -1,14 +1,36 @@
+import { connect } from "react-redux";
 import { CalenderScreen } from "@/Screens/Calender";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { SelfCareScreen } from "@/Screens/SelfCare";
-import { HomeScreen } from "@/Screens/Home";
+import SelfCareScreen from "@/Screens/SelfCare";
+import HomeScreen from "@/Screens/Home";
 import { StyleProp, TextStyle } from "react-native";
 import MarketPlaceScreen from "@/Screens/MarketPlace";
+import { UserPhaseState } from "@/redux/action/userPhaseAction";
+import { RootState } from "@/redux/reducer";
+import TasksScreen from "@/Screens/Tasks";
 
 const Tab = createBottomTabNavigator();
 
-export function MenuBottom() {
+// export function MenuBottom() {
+interface MenuBottomProps {
+  userPhase: UserPhaseState; // Update the type to UserPhaseState
+}
+
+// export function MenuBottom<MenuBottomProps>({ userPhase }) {
+
+const MenuBottom: React.FC<MenuBottomProps> = ({ userPhase }) => {
+  const safeAreaBackgroundColor =
+    userPhase.userPhase === "ovulatory"
+      ? "#FF4B83"
+      : userPhase.userPhase === "luteal"
+      ? "#FD7900"
+      : userPhase.userPhase === "follicular"
+      ? "#0F9B3F"
+      : userPhase.userPhase === "period"
+      ? "#006FFD"
+      : "#red";
+
   return (
     <Tab.Navigator
       // screenOptions={{
@@ -87,7 +109,7 @@ export function MenuBottom() {
       />
       <Tab.Screen
         name="Menu"
-        component={SelfCareScreen}
+        component={TasksScreen}
         options={{
           headerShown: false,
           tabBarLabel: "",
@@ -119,4 +141,12 @@ export function MenuBottom() {
       />
     </Tab.Navigator>
   );
-}
+};
+
+// Map Redux state to component props
+const mapStateToProps = (state: RootState) => ({
+  userPhase: state.userPhase, // Access the user phase from the root state
+});
+
+// Connect the component to the Redux store
+export default connect(mapStateToProps)(MenuBottom);

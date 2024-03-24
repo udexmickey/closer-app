@@ -1,17 +1,36 @@
-import { SplashScreen } from "@/Screens/Welcome";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { CalenderScreen } from "@/Screens/Calender";
-import { SelfCareScreen } from "@/Screens/SelfCare";
+import SelfCareScreen from "@/Screens/SelfCare";
 import { ProfileScreen } from "@/Screens/Profile";
-import { HomeScreen } from "@/Screens/Home";
-import { MenuBottom } from "./Bottom.menu";
+import HomeScreen from "@/Screens/Home";
+import MenuBottom from "./Bottom.menu";
 import { Ionicons, Feather } from "@expo/vector-icons";
-import { TouchableOpacityDiv, ViewDiv, TextDiv } from "nativewind.config";
+import { TouchableOpacityDiv, ViewDiv } from "nativewind.config";
 import React from "react";
+import { UserPhaseState } from "@/redux/action/userPhaseAction";
+import { connect } from "react-redux";
+import { RootState } from "@/redux/reducer";
 
 const Drawer = createDrawerNavigator();
 
-export function MyDrawer() {
+interface MyDrawerProps {
+  userPhase: UserPhaseState; // Update the type to UserPhaseState
+}
+
+// export function MyDrawer<MyDrawerProps>({ userPhase }) {
+
+const MyDrawer: React.FC<MyDrawerProps> = ({ userPhase }) => {
+  const safeAreaBackgroundColor =
+    userPhase.userPhase === "ovulatory"
+      ? "#FF4B83"
+      : userPhase.userPhase === "luteal"
+      ? "#FD7900"
+      : userPhase.userPhase === "follicular"
+      ? "#0F9B3F"
+      : userPhase.userPhase === "period"
+      ? "#006FFD"
+      : "#red";
+
   const BackArrow = ({ onPress }: { onPress?: () => void }) => (
     <ViewDiv className="flex items-center justify-center text-center flex-row gap-x-4 pr-6 w-32 h-12">
       <TouchableOpacityDiv
@@ -32,12 +51,16 @@ export function MyDrawer() {
   return (
     <Drawer.Navigator
       initialRouteName="MenuBottom"
-      screenOptions={{ drawerPosition: "left" }}
+      screenOptions={{
+        drawerPosition: "left",
+        // drawerStyle: { backgroundColor: safeAreaBackgroundColor },
+      }}
     >
       <Drawer.Screen
         name="MenuBottom"
         component={MenuBottom}
         options={({ navigation }) => ({
+          // drawerStyle: { backgroundColor: safeAreaBackgroundColor },
           drawerLabel: "MenuBottom",
           headerRight: () => <BackArrow />,
           headerTitle: "",
@@ -55,7 +78,9 @@ export function MyDrawer() {
             />
           ),
           // drawerItemStyle: { paddingLeft: 60 }, //use This for Icon or image
-          drawerLabelStyle: { paddingRight: 20 },
+          drawerLabelStyle: {
+            paddingRight: 20,
+          },
         })}
       />
       <Drawer.Screen
@@ -81,4 +106,12 @@ export function MyDrawer() {
       />
     </Drawer.Navigator>
   );
-}
+};
+
+// Map Redux state to component props
+const mapStateToProps = (state: RootState) => ({
+  userPhase: state.userPhase, // Access the user phase from the root state
+});
+
+// Connect the component to the Redux store
+export default connect(mapStateToProps)(MyDrawer);

@@ -1,14 +1,23 @@
-import { Navigation } from "../../App/Authentication/Login";
-import { useAuth } from "@/context/authContext";
+import { connect } from "react-redux";
+import { useState } from "react";
 import { ScrollViewDiv, TextDiv, ViewDiv } from "nativewind.config";
-import HeaderBanner from "@/components/banner/headerBanner";
+import { Navigation } from "../../App/Authentication/Login";
 import OvulationNotifier from "@/components/Notifications/OvulationNotifier";
 import TaskCard, { TaskItem } from "@/components/card/tasks.card";
 import sampleTasks from "./seed.data";
-import { useState } from "react";
 import LogPeriodIndicator from "@/components/indicator/log.period.indicator";
+import { RootState } from "@/redux/reducer";
+import { UserPhaseState } from "@/redux/action/userPhaseAction";
+import PhaseBanner from "./PhaseBanner";
 
-export function HomeScreen({ navigation }: { navigation: Navigation }) {
+// Define component props
+interface HomeScreenProps {
+  navigation: Navigation;
+  userPhase: UserPhaseState; // Update the type to UserPhaseState
+}
+
+// Define HomeScreen component
+const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, userPhase }) => {
   // State to manage tasks
   const [tasks, setTasks] = useState<TaskItem[]>(sampleTasks);
 
@@ -21,35 +30,32 @@ export function HomeScreen({ navigation }: { navigation: Navigation }) {
   return (
     <ViewDiv className="flex-1 bg-white pb-2">
       <ScrollViewDiv className="flex-1 bg-white gap-y-4 mt-0">
-        <HeaderBanner
-          visible={true}
-          user={"Adenike"}
-          phase={"Ovulatory Phase."}
-          description={"Connect, Harness Your Social Superpowers 🚀"}
-          backgroundImage={require("../../assets/images/banner-background.png")}
-          backgroundColor={"#FFF7FA"}
-          phaseColor={"#FF4B83"}
-        />
+        {/* // Header banner for user phase component */}
+        <PhaseBanner userPhase={userPhase.userPhase} />
 
         {/* //Date picker for active period/ovulation phase */}
         <ViewDiv className="flex flex-row w-full p-4 mx-auto justify-center">
-          <LogPeriodIndicator />
+          <LogPeriodIndicator userPhase={userPhase.userPhase} />
         </ViewDiv>
 
         {/* Ovalution notifier component */}
         <ViewDiv>
           <OvulationNotifier
+            userPhase={userPhase.userPhase}
             days={4}
             date={20}
-            month={"July"}
-            backgroundColor={"#FFF7FA"}
-            borderColor={"#F26D6D"}
+            month={"April"}
           />
         </ViewDiv>
 
         {/* Task card component */}
         <ViewDiv className="flex flex-row w-full p-4 justify-between items-start mx-auto">
-          <TaskCard title={"Today’s Tasks"} tasks={tasks} planTask={planTask} />
+          <TaskCard
+            title={"Today’s Tasks"}
+            tasks={tasks}
+            planTask={planTask}
+            userPhase={userPhase.userPhase}
+          />
         </ViewDiv>
 
         <ViewDiv className="flex flex-col justify-center items-left bg-[#FFF7FA] rounded-3xl p-6 max-w-sm w-full mx-auto">
@@ -64,4 +70,12 @@ export function HomeScreen({ navigation }: { navigation: Navigation }) {
       </ScrollViewDiv>
     </ViewDiv>
   );
-}
+};
+
+// Map Redux state to component props
+const mapStateToProps = (state: RootState) => ({
+  userPhase: state.userPhase, // Access the user phase from the root state
+});
+
+// Connect the component to the Redux store
+export default connect(mapStateToProps)(HomeScreen);

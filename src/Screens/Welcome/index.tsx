@@ -48,13 +48,12 @@ export function SplashScreen({ navigation }: { navigation: Navigation }) {
             <TextDiv className="text-center text-[#FF4B83] font-bold text-4xl max-w-xs w-full mx-auto">
               Own Your Menstrual Cycle. Plan, Track, Thrive!
             </TextDiv>
-            <ImageBackgroundDiv />
             <ImageDiv
               source={secondImage}
               accessibilityLabel={`Closer splash banner 2`}
               resizeMethod="resize"
-              resizeMode="cover"
-              className={`flex items-center justify-center object-cover w-full aspect-auto bg-[#FFF4F7]`}
+              resizeMode="contain"
+              className={`flex items-center justify-center w-full  max-w-3xl bg-[#FFF4F7]`}
             />
           </ViewDiv>
         </ViewDiv>

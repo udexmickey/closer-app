@@ -6,6 +6,8 @@ import {
   MD3LightTheme as DefaultTheme,
   Provider as PaperProvider,
 } from "react-native-paper";
+import { Provider } from "react-redux";
+import store from "@/redux/store/store";
 
 const theme = {
   ...DefaultTheme,
@@ -18,16 +20,18 @@ const theme = {
 
 const App = () => {
   return (
-    <AuthProvider>
-      <PaperProvider theme={theme}>
-        <StatusBar
-          translucent
-          backgroundColor="transparent"
-          barStyle="dark-content"
-        />
-        <Navigation />
-      </PaperProvider>
-    </AuthProvider>
+    <Provider store={store}>
+      <AuthProvider>
+        <PaperProvider theme={theme}>
+          <StatusBar
+            translucent
+            backgroundColor="transparent"
+            barStyle="dark-content"
+          />
+          <Navigation />
+        </PaperProvider>
+      </AuthProvider>
+    </Provider>
   );
 };
 

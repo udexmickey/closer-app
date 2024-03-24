@@ -18,9 +18,17 @@ interface TaskCardProps {
   title: string;
   tasks: TaskItem[];
   planTask: () => void;
+  // buttonBackgroundColor: string;
+  userPhase: string;
 }
 
-const TaskCard: React.FC<TaskCardProps> = ({ title, tasks, planTask }) => {
+const TaskCard: React.FC<TaskCardProps> = ({
+  title,
+  tasks,
+  planTask,
+  // buttonBackgroundColor,
+  userPhase,
+}) => {
   const [taskList, setTaskList] = useState<TaskItem[]>(tasks);
   const [page, setPage] = useState(0);
   const pageSize = 4;
@@ -32,6 +40,17 @@ const TaskCard: React.FC<TaskCardProps> = ({ title, tasks, planTask }) => {
     updatedTasks[index].completed = !updatedTasks[index].completed;
     setTaskList(updatedTasks);
   };
+
+  const planMoreTasksBackgroundColor =
+    userPhase === "ovulatory"
+      ? "#FF4B83"
+      : userPhase === "luteal"
+      ? "#FD7900"
+      : userPhase === "follicular"
+      ? "#0F9B3F"
+      : userPhase === "period"
+      ? "#006FFD"
+      : "#red";
 
   const renderTaskItem = ({
     item,
@@ -46,7 +65,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ title, tasks, planTask }) => {
     >
       <View style={styles.checkbox}>
         {item.completed ? (
-          <AntDesign name="checkcircle" size={20} color="green" />
+          <AntDesign name="checkcircle" size={20} color="#FF4B83" />
         ) : (
           <Feather name="circle" size={20} color="#535C6C" />
         )}
@@ -94,7 +113,10 @@ const TaskCard: React.FC<TaskCardProps> = ({ title, tasks, planTask }) => {
       </View>
       <TouchableOpacityDiv
         className="w-max justify-center items-center bg-[#FF4B83] text-white rounded-full py-3 px-6 mt-3"
-        style={styles.button}
+        style={[
+          styles.button,
+          { backgroundColor: planMoreTasksBackgroundColor ?? "#FF4B83" },
+        ]}
         onPress={() => planTask()}
       >
         <Text style={styles.buttonText}>Plan Tasks</Text>

@@ -19,7 +19,7 @@ const WeekDay: React.FC<WeekDayProps> = ({
   dueDate,
   currentDateBackgroundColor = "rgba(255, 75, 131, 0.6)",
   currentDateTextColor = "#FFFFFF",
-  dueDateBorderColor = "#F26D6D",
+  dueDateBorderColor,
 }) => {
   const today_date = new Date(currentDate);
   const dueDateObj = new Date(dueDate);

@@ -5,13 +5,65 @@ import { AntDesign } from "@expo/vector-icons";
 import WeeklyDueDate from "../WeeklyDueDate";
 import WeekDay from "../WeeklyDueDate";
 import { FlatList } from "react-native-gesture-handler";
+import { Modal } from "react-native-paper";
 
-const LogPeriodIndicator = () => {
+const LogPeriodIndicator = ({
+  // currentDateBackgroundColor,
+  // dueDateBorderColor,
+  userPhase,
+}: {
+  // currentDateBackgroundColor?: string;
+  // dueDateBorderColor?: string;
+  userPhase: string;
+}) => {
   // Generate an array of date numbers representing the days of the week
   const currentDate = new Date();
   const startOfWeek = currentDate.getDate() - currentDate.getDay(); // Get the starting day of the week (Sunday)
   const daysOfWeek = Array.from({ length: 7 }, (_, i) => startOfWeek + i + 1); // Generate an array of date numbers for the current week
 
+  const logPeriodBackgroundColor =
+    userPhase === "ovulatory"
+      ? "#FF4B83"
+      : userPhase === "luteal"
+      ? "#FD7900"
+      : userPhase === "follicular"
+      ? "#0F9B3F"
+      : userPhase === "period"
+      ? "#006FFD"
+      : "#red";
+
+  const currentDateBackgroundColor =
+    userPhase === "ovulatory"
+      ? "rgba(255, 75, 131, 0.6)"
+      : userPhase === "luteal"
+      ? "rgba(253 121 0 / 0.6)"
+      : userPhase === "follicular"
+      ? "rgba(15 155 63 / 0.6)"
+      : userPhase === "period"
+      ? "rgba(0 111 253 / 0.6)"
+      : "#red";
+
+  const dueDateBorderColor =
+    userPhase === "ovulatory"
+      ? "#F26D6D"
+      : userPhase === "luteal"
+      ? "#FD7900"
+      : userPhase === "follicular"
+      ? "#0F9B3F"
+      : userPhase === "period"
+      ? "#006FFD"
+      : "#red";
+
+  const handleLogPeriod = () => {
+    <Modal
+      visible={true}
+      children={
+        <ViewDiv>
+          <TextDiv>Log the new Date</TextDiv>
+        </ViewDiv>
+      }
+    />;
+  };
   return (
     <ViewDiv className="flex flex-col w-full gay-y-16">
       <ViewDiv className="flex flex-row w-full justify-between items-center">
@@ -22,7 +74,11 @@ const LogPeriodIndicator = () => {
           </TextDiv>
         </ViewDiv>
 
-        <TouchableOpacityDiv className="w-max justify-center items-center bg-[#ff4b83] text-white rounded-full py-2 px-3">
+        <TouchableOpacityDiv
+          className="w-max justify-center items-center text-white rounded-full py-2 px-3"
+          style={{ backgroundColor: logPeriodBackgroundColor ?? "#FF4B83" }}
+          onPress={handleLogPeriod}
+        >
           <TextDiv className="text-white text-sm font-semibold">
             Log Period
           </TextDiv>
@@ -50,8 +106,10 @@ const LogPeriodIndicator = () => {
               dateNumber={item}
               currentDate={new Date().getTime()}
               dueDate={new Date(2024, 3, 24).getTime()}
-              currentDateBackgroundColor="rgba(255, 75, 131, 0.6)"
-              dueDateBorderColor="#F26D6D"
+              // currentDateBackgroundColor="rgba(255, 75, 131, 0.6)"
+              currentDateBackgroundColor={currentDateBackgroundColor}
+              // dueDateBorderColor="#F26D6D"
+              dueDateBorderColor={dueDateBorderColor}
             />
           )}
           keyExtractor={(item) => item.toString()}

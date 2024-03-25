@@ -6,7 +6,7 @@ import {
   TextDiv,
   TouchableOpacityDiv,
 } from "nativewind.config";
-import PhaseBanner from "../Home/PhaseBanner";
+import PhaseBanner from "../../components/banner/PhaseBanner";
 import { connect } from "react-redux";
 import { RootState } from "@/redux/reducer";
 import { UserPhaseState } from "@/redux/action/userPhaseAction";

@@ -1,5 +1,5 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { CalenderScreen } from "@/Screens/Calender";
+import CalendarScreen from "@/Screens/Calender";
 import SelfCareScreen from "@/Screens/SelfCare";
 import { ProfileScreen } from "@/Screens/Profile";
 import HomeScreen from "@/Screens/Home";
@@ -10,6 +10,7 @@ import React from "react";
 import { UserPhaseState } from "@/redux/action/userPhaseAction";
 import { connect } from "react-redux";
 import { RootState } from "@/redux/reducer";
+import { LogoutScreen } from "@/Screens/Logout";
 
 const Drawer = createDrawerNavigator();
 
@@ -84,15 +85,20 @@ const MyDrawer: React.FC<MyDrawerProps> = ({ userPhase }) => {
         })}
       />
       <Drawer.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{ drawerLabel: "Profile" }}
+      />
+      <Drawer.Screen
         name="Home"
         component={HomeScreen}
         options={{ drawerLabel: "Home" }}
       />
 
       <Drawer.Screen
-        name="Calender"
-        component={CalenderScreen}
-        options={{ drawerLabel: "Calender" }}
+        name="Calendar"
+        component={CalendarScreen}
+        options={{ drawerLabel: "Calendar" }}
       />
       <Drawer.Screen
         name="SelfCare"
@@ -100,9 +106,9 @@ const MyDrawer: React.FC<MyDrawerProps> = ({ userPhase }) => {
         options={{ drawerLabel: "SelfCare" }}
       />
       <Drawer.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{ drawerLabel: "Profile" }}
+        name="LogOut"
+        component={LogoutScreen}
+        options={{ drawerLabel: "LogOut" }}
       />
     </Drawer.Navigator>
   );

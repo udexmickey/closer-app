@@ -8,28 +8,24 @@ import {
 } from "nativewind.config";
 import { ImageSourcePropType } from "react-native";
 
-type headerBannerType = {
-  visible: boolean;
+type selfCareBannerType = {
   user: string;
   phase: string;
   description: string;
   backgroundImage: string;
   backgroundColor: string;
   phaseColor: string;
-  onPress?: () => void;
-  buttonVisible?: boolean;
+  handleMonitorWellness: () => void;
 };
 
-const HeaderBanner: React.FC<headerBannerType> = ({
-  visible,
+const SelfCareBanner: React.FC<selfCareBannerType> = ({
   user,
   phase,
   description,
   backgroundImage,
   backgroundColor,
   phaseColor,
-  onPress,
-  buttonVisible,
+  handleMonitorWellness,
 }) => {
   return (
     <ViewDiv className="w-full">
@@ -55,35 +51,30 @@ const HeaderBanner: React.FC<headerBannerType> = ({
               <TextDiv className="capitalize text-[#62565A] text-base max-w-md w-full font-medium">
                 Hello {user ?? "Adenike"},{" "}
               </TextDiv>
-              <ViewDiv className="text-lg max-w-md w-full flex-col mb-2">
-                <TextDiv className="text-[#000000] text-3xl font-semibold max-w-full w-[65%]">
-                  You’re in your
-                </TextDiv>
+              <ViewDiv className="text-lg max-w-sm w-full flex-col">
                 <TextDiv
                   className={`capitalize text-[${
                     phaseColor ?? "#FF4B83"
-                  }] text-3xl font-semibold max-w-full w-[75%]`}
+                  }] text-4xl font-semibold max-w-full w-[75%] pb-2`}
                   style={{
                     color: phaseColor || "#FF4B83",
                   }}
                 >
-                  {(visible && phase + " Phase. ") ?? "Ovulatory Phase."}
+                  {phase ?? "Transform Your Cycle"}
                 </TextDiv>
-                <TextDiv className="capitalize text-[#62565A] text-sm max-w-md w-[65%] mt-2">
+                <TextDiv className="capitalize text-[#54575D] text-xs font-normal max-w-md w-[80%] mt-2">
                   {description ?? "Connect, Harness Your Social Superpowers 🚀"}
                 </TextDiv>
-              </ViewDiv>
 
-              {buttonVisible && (
                 <TouchableOpacityDiv
-                  className="justify-center items-center text-white rounded-full py-3 px-4 bg-[#FF4B83] max-w-max"
-                  onPress={onPress}
+                  className="my-4 justify-center items-center text-white rounded-full py-2 px-3 bg-[#FF4B83] max-w-max w-[32%]"
+                  onPress={handleMonitorWellness}
                 >
                   <TextDiv className="text-white text-sm font-semibold">
-                    Monitor Wellness
+                    Set New Task
                   </TextDiv>
                 </TouchableOpacityDiv>
-              )}
+              </ViewDiv>
             </ViewDiv>
           </ImageBackgroundDiv>
         </ViewDiv>
@@ -92,4 +83,4 @@ const HeaderBanner: React.FC<headerBannerType> = ({
   );
 };
 
-export default HeaderBanner;
+export default SelfCareBanner;

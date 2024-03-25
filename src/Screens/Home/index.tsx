@@ -8,7 +8,7 @@ import sampleTasks from "./seed.data";
 import LogPeriodIndicator from "@/components/indicator/log.period.indicator";
 import { RootState } from "@/redux/reducer";
 import { UserPhaseState } from "@/redux/action/userPhaseAction";
-import PhaseBanner from "./PhaseBanner";
+import PhaseBanner from "../../components/banner/PhaseBanner";
 
 // Define component props
 interface HomeScreenProps {
@@ -31,7 +31,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, userPhase }) => {
     <ViewDiv className="flex-1 bg-white pb-2">
       <ScrollViewDiv className="flex-1 bg-white gap-y-4 mt-0">
         {/* // Header banner for user phase component */}
-        <PhaseBanner userPhase={userPhase.userPhase} />
+        <PhaseBanner userPhase={userPhase.userPhase} buttonVisible={false} />
 
         {/* //Date picker for active period/ovulation phase */}
         <ViewDiv className="flex flex-row w-full p-4 mx-auto justify-center">

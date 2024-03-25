@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { CalenderScreen } from "@/Screens/Calender";
+import CalendarScreen from "@/Screens/Calender";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import SelfCareScreen from "@/Screens/SelfCare";
@@ -99,7 +99,7 @@ const MenuBottom: React.FC<MenuBottomProps> = ({ userPhase }) => {
       />
       <Tab.Screen
         name="Calendar"
-        component={CalenderScreen}
+        component={CalendarScreen}
         options={{
           headerShown: false,
           tabBarLabel: "Calendar",

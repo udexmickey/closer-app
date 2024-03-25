@@ -4,9 +4,10 @@ import HeaderBanner from "@/components/banner/headerBanner";
 
 interface BannerProps {
   userPhase: string; // Define the prop type for userPhase
+  buttonVisible?: boolean;
 }
 
-const PhaseBanner: React.FC<BannerProps> = ({ userPhase }) => {
+const PhaseBanner: React.FC<BannerProps> = ({ userPhase, buttonVisible }) => {
   // Render the appropriate screen based on the user phase
   const renderScreen = () => {
     switch (userPhase.toLowerCase()) {
@@ -20,6 +21,7 @@ const PhaseBanner: React.FC<BannerProps> = ({ userPhase }) => {
             backgroundImage={require("../../assets/images/ovulatory-background.png")}
             backgroundColor={"#FFF7FA"}
             phaseColor={"#FF4B83"}
+            buttonVisible={buttonVisible}
           />
         );
       case "luteal":
@@ -32,6 +34,7 @@ const PhaseBanner: React.FC<BannerProps> = ({ userPhase }) => {
             backgroundImage={require("../../assets/images/luteal-background.png")}
             backgroundColor={"#FFF7F1"}
             phaseColor={"#FD7900"}
+            buttonVisible={buttonVisible}
           />
         );
       case "follicular":
@@ -44,6 +47,7 @@ const PhaseBanner: React.FC<BannerProps> = ({ userPhase }) => {
             backgroundImage={require("../../assets/images/follicular-background.png")}
             backgroundColor={"#F7FCF7"}
             phaseColor={"#0F9B3F"}
+            buttonVisible={buttonVisible}
           />
         );
       case "period":
@@ -56,6 +60,7 @@ const PhaseBanner: React.FC<BannerProps> = ({ userPhase }) => {
             backgroundImage={require("../../assets/images/period-background.png")}
             backgroundColor={"#E1F1FF"}
             phaseColor={"#006FFD"}
+            buttonVisible={buttonVisible}
           />
         );
       default:
@@ -68,6 +73,7 @@ const PhaseBanner: React.FC<BannerProps> = ({ userPhase }) => {
             backgroundImage={require("../../assets/images/follicular-background.png")}
             backgroundColor={"#FFF7FA"}
             phaseColor={"#006FFD"}
+            buttonVisible={buttonVisible}
           />
         );
     }

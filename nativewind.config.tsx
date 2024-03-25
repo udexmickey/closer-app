@@ -16,6 +16,7 @@ import {
   Switch, // Adding Switch
   VirtualizedList, // Adding VirtualizedList
   Pressable,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { styled } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -39,6 +40,7 @@ export const ModalDiv = styled(Modal); // Adding Modal
 export const ActivityIndicatorDiv = styled(ActivityIndicator);
 export const SwitchDiv = styled(Switch);
 export const VirtualizedListDiv = styled(VirtualizedList);
+export const TouchableWithoutFeedbackDiv = styled(TouchableWithoutFeedback);
 
 // For my Pressable component, i will be getting it from "react-native-safe-area-context" this helps provides more options for my styles and componets useage
 export const PressableDiv = styled(Pressable);

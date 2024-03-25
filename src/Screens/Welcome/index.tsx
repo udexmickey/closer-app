@@ -22,7 +22,7 @@ export function SplashScreen({ navigation }: { navigation: Navigation }) {
     return () => clearTimeout(timer);
   }, [isLoading]);
 
-  const secondImage = require("../../assets/images/girls-group.png");
+  const secondImage = require("../../assets/images/Group1.png");
 
   return (
     <ViewDiv
@@ -44,7 +44,7 @@ export function SplashScreen({ navigation }: { navigation: Navigation }) {
         />
       ) : (
         <ViewDiv className="flex items-center justify-end bg-[#FFF4F7] w-full h-full">
-          <ViewDiv className="flex items-center justify-between bg-[#FFF4F7] w-full h-[80%]">
+          <ViewDiv className="flex items-center justify-between bg-[#FFF4F7] w-full h-[85%]">
             <TextDiv className="text-center text-[#FF4B83] font-bold text-4xl max-w-xs w-full mx-auto">
               Own Your Menstrual Cycle. Plan, Track, Thrive!
             </TextDiv>
@@ -52,8 +52,8 @@ export function SplashScreen({ navigation }: { navigation: Navigation }) {
               source={secondImage}
               accessibilityLabel={`Closer splash banner 2`}
               resizeMethod="resize"
-              resizeMode="contain"
-              className={`flex items-center justify-center w-full  max-w-3xl bg-[#FFF4F7]`}
+              resizeMode="cover"
+              className={`flex items-center justify-center max-w-md w-full max-h-96 h-full bg-[#FFF4F7]`}
             />
           </ViewDiv>
         </ViewDiv>

@@ -1,20 +1,23 @@
-import { View, Text } from "react-native";
-import React, { useState } from "react";
-import { ViewDiv, TextDiv, ImageDiv } from "nativewind.config";
+import React from "react";
+import { ViewDiv, TextDiv } from "nativewind.config";
 import TasksCheckBox, { TasksItem } from "@/Screens/Tasks/tasksCheckBox";
-import sampleTasks from "@/Screens/Tasks/seed.data";
 import EmptyTaskState from "@/Screens/Tasks/EmptyTaskState";
 
 type TasksTipProps = {
   taskStatus: string;
   description: string;
+  tasks: TasksItem[];
 };
 
-const TasksTips: React.FC<TasksTipProps> = ({ taskStatus, description }) => {
-  const [tasks, setTasks] = useState<TasksItem[]>(sampleTasks);
+const TasksTips: React.FC<TasksTipProps> = ({
+  taskStatus,
+  description,
+  tasks,
+}) => {
+  // const [tasks, setTasks] = useState<TasksItem[]>(sampleTasks);
   return (
     <>
-      {tasks.length < 1 ? (
+      {tasks && tasks?.length < 1 ? (
         <EmptyTaskState />
       ) : (
         <ViewDiv className="flex-col justify-center items-left gap-y-8">

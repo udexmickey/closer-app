@@ -30,7 +30,6 @@ const HeaderBanner: React.FC<headerBannerType> = ({
     <ViewDiv className="w-full">
       <ViewDiv
         style={{
-          paddingLeft: 20,
           backgroundColor: backgroundColor ?? "#FFF7FA",
         }}
       >
@@ -44,26 +43,31 @@ const HeaderBanner: React.FC<headerBannerType> = ({
               backgroundColor: backgroundColor,
             }}
           >
-            <TextDiv className="capitalize text-[#62565A] text-base max-w-md w-full font-medium">
-              Hello {user ?? "Adenike"},{" "}
-            </TextDiv>
-            <ViewDiv className="text-lg max-w-md w-full flex-col">
-              <TextDiv className="text-[#000000] text-3xl font-semibold max-w-full w-[65%]">
-                You’re in your
+            <ViewDiv
+              style={{ paddingLeft: 20 }}
+              className="flex flex-col max-w-md w-full gap-y-4 items-start justify-start"
+            >
+              <TextDiv className="capitalize text-[#62565A] text-base max-w-md w-full font-medium">
+                Hello {user ?? "Adenike"},{" "}
               </TextDiv>
-              <TextDiv
-                className={`capitalize text-[${
-                  phaseColor ?? "#FF4B83"
-                }] text-3xl font-semibold max-w-full w-[75%]`}
-                style={{
-                  color: phaseColor || "#FF4B83",
-                }}
-              >
-                {(visible && phase + " Phase. ") ?? "Ovulatory Phase."}
-              </TextDiv>
-              <TextDiv className="capitalize text-[#62565A] text-sm max-w-md w-[65%] mt-2">
-                {description ?? "Connect, Harness Your Social Superpowers 🚀"}
-              </TextDiv>
+              <ViewDiv className="text-lg max-w-md w-full flex-col">
+                <TextDiv className="text-[#000000] text-3xl font-semibold max-w-full w-[65%]">
+                  You’re in your
+                </TextDiv>
+                <TextDiv
+                  className={`capitalize text-[${
+                    phaseColor ?? "#FF4B83"
+                  }] text-3xl font-semibold max-w-full w-[75%]`}
+                  style={{
+                    color: phaseColor || "#FF4B83",
+                  }}
+                >
+                  {(visible && phase + " Phase. ") ?? "Ovulatory Phase."}
+                </TextDiv>
+                <TextDiv className="capitalize text-[#62565A] text-sm max-w-md w-[65%] mt-2">
+                  {description ?? "Connect, Harness Your Social Superpowers 🚀"}
+                </TextDiv>
+              </ViewDiv>
             </ViewDiv>
           </ImageBackgroundDiv>
         </ViewDiv>

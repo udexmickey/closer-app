@@ -14,6 +14,7 @@ type tasksBannerBannerType = {
   // backgroundImage: string;
   backgroundColor: string;
   phaseColor: string;
+  handleOnPress: () => void;
 };
 
 const TasksBannerBanner: React.FC<tasksBannerBannerType> = ({
@@ -22,11 +23,8 @@ const TasksBannerBanner: React.FC<tasksBannerBannerType> = ({
   // backgroundImage,
   backgroundColor,
   phaseColor,
+  handleOnPress,
 }) => {
-  const HandleAddTask = () => {
-    console.log("Add Task");
-  };
-
   return (
     <ViewDiv className="w-full">
       <ViewDiv
@@ -59,7 +57,7 @@ const TasksBannerBanner: React.FC<tasksBannerBannerType> = ({
 
               <TouchableOpacityDiv
                 className="my-4 justify-center items-center text-white rounded-full py-2 px-3 bg-[#FF4B83] max-w-max w-[32%]"
-                onPress={HandleAddTask}
+                onPress={handleOnPress}
               >
                 <TextDiv className="text-white text-sm font-semibold">
                   Set New Task

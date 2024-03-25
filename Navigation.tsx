@@ -19,6 +19,9 @@ import { OtpScreen } from "@/App/OnboardingScreens/OtpScreen";
 import OnboardingScreen from "@/App/OnboardingScreens";
 import SymptomsCreatedScreen from "@/App/OnboardingScreens/SymptomsCreatedScreen";
 import { useAuth } from "@/context/authContext";
+import SetNewTaskScreen from "@/Screens/Tasks/SetNewTask/SetNewTask";
+import TasksScreen from "@/Screens/Tasks/index";
+import TaskAddedSuccessfullyScreen from "@/Screens/Tasks/TaskAddedSuccessfullyScreen/TaskAddedSuccessfullyScreen";
 
 type RootStackParamList = {
   Onboarding: {
@@ -39,6 +42,9 @@ type RootStackParamList = {
   OneStepCloserScreen: undefined;
   AddSymptom: undefined;
   SymptomsCreatedScreen: undefined;
+  SetNewTaskScreen: undefined;
+  TaskAddedSuccessfullyScreen: undefined;
+  TasksScreen: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -115,9 +121,9 @@ const Navigation = () => {
         }
         screenOptions={{
           headerShown: false,
-          headerStyle: {
-            backgroundColor: "#FF4B83",
-          },
+          // headerStyle: {
+          //   backgroundColor: "#FF4B83",
+          // },
         }}
       >
         {/* when the Navigation first loads it renders the loading screen */}
@@ -127,6 +133,42 @@ const Navigation = () => {
         state.userToken ? (
           <>
             <Stack.Screen name="MainApp" component={MainApp} />
+            <Stack.Screen
+              name="SetNewTaskScreen"
+              component={SetNewTaskScreen}
+              options={({ navigation }) => ({
+                title: "Set New Task",
+                headerLeft: () => (
+                  <BackArrow onPress={() => navigation.goBack()} />
+                ),
+                headerTitle: "Set New Task",
+                headerShown: true, // Override headerShown to true for ForgetPassword screen
+              })}
+            />
+            <Stack.Screen
+              name="TasksScreen"
+              component={TasksScreen}
+              options={({ navigation }) => ({
+                title: "Set New Task",
+                headerLeft: () => (
+                  <BackArrow onPress={() => navigation.goBack()} />
+                ),
+                headerTitle: "Set New Task",
+                headerShown: true, // Override headerShown to true for ForgetPassword screen
+              })}
+            />
+            <Stack.Screen
+              name="TaskAddedSuccessfullyScreen"
+              component={TaskAddedSuccessfullyScreen}
+              options={({ navigation }) => ({
+                title: "Task Added Successfully!",
+                headerLeft: () => (
+                  <BackArrow onPress={() => navigation.goBack()} />
+                ),
+                headerTitle: "Task Added Successfully!",
+                headerShown: false, // Override headerShown to true for ForgetPassword screen
+              })}
+            />
             {symptomsRoute}
           </>
         ) : // when the onboarding is completed and the user is logged in it renders the main Navigation

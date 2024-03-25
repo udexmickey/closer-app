@@ -5,10 +5,12 @@ import { connect } from "react-redux";
 import { RootState } from "@/redux/reducer";
 import { UserPhaseState } from "@/redux/action/userPhaseAction";
 import SelfCareBanner from "@/components/banner/TasksBanner";
-import React from "react";
+import React, { useState } from "react";
 import TabBar from "@/components/Tabs/tasks.tabs";
 import TasksTips from "@/components/card/TasksTip.card";
 import TasksBannerBanner from "@/components/banner/TasksBanner";
+import sampleTasks from "./seed.data";
+import { TasksItem } from "./tasksCheckBox";
 
 // Define component props
 interface TasksProps {
@@ -17,12 +19,10 @@ interface TasksProps {
 }
 
 const TasksScreen: React.FC<TasksProps> = ({ navigation, userPhase }) => {
-  const AddSymptom = () => {
-    navigation.navigate("AddSymptom");
-  };
+  const [tasks, setTasks] = useState<TasksItem[]>(sampleTasks);
 
-  const ExpandSymptom = () => {
-    console.log("Expand Symptoms");
+  const SetNewTaskScreen = () => {
+    navigation.navigate("SetNewTaskScreen");
   };
 
   const tasktabs = [
@@ -34,16 +34,25 @@ const TasksScreen: React.FC<TasksProps> = ({ navigation, userPhase }) => {
           description={
             "These tasks are expected to be completed in the next 20 days."
           }
+          tasks={tasks}
         />
       ),
     },
     {
       title: "Upcoming Task",
-      component: <TasksTips taskStatus={"Upcoming Task"} description={""} />,
+      component: (
+        <TasksTips
+          taskStatus={"Upcoming Task"}
+          description={""}
+          tasks={tasks}
+        />
+      ),
     },
     {
       title: "Completed Task",
-      component: <TasksTips taskStatus={"Completed Tasks"} description={""} />,
+      component: (
+        <TasksTips taskStatus={"Completed Tasks"} description={""} tasks={[]} />
+      ),
     },
   ];
 
@@ -56,9 +65,9 @@ const TasksScreen: React.FC<TasksProps> = ({ navigation, userPhase }) => {
           description={
             "You have 3 tasks on the queue. Make sure you complete them when due."
           }
-          // backgroundImage={""}
           backgroundColor={"#FFF7FA"}
           phaseColor={""}
+          handleOnPress={SetNewTaskScreen}
         />
 
         <ViewDiv className=" bg-white w-full max-w-md mx-auto">
@@ -73,7 +82,7 @@ const TasksScreen: React.FC<TasksProps> = ({ navigation, userPhase }) => {
 
 // Map Redux state to component props
 const mapStateToProps = (state: RootState) => ({
-  userPhase: state.userPhase, // Access the user phase from the root state
+  userPhase: state.userPhase,
 });
 
 // Connect the component to the Redux store

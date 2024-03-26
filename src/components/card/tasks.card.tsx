@@ -109,6 +109,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
           renderItem={renderTaskItem}
           keyExtractor={(item, index) => index.toString()}
           contentContainerStyle={styles.taskList}
+          scrollEnabled={false}
         />
       </View>
       <TouchableOpacityDiv

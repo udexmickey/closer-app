@@ -23,11 +23,6 @@ const App = () => {
     <Provider store={store}>
       <AuthProvider>
         <PaperProvider theme={theme}>
-          <StatusBar
-            translucent
-            backgroundColor="transparent"
-            barStyle="dark-content"
-          />
           <Navigation />
         </PaperProvider>
       </AuthProvider>

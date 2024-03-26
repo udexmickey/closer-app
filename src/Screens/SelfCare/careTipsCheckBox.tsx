@@ -87,6 +87,7 @@ const CareTipsCheckBox: React.FC<CareTipsCheckBoxProps> = ({
       {/* Render the FlatList */}
       <ViewDiv>
         <FlatList
+          scrollEnabled={false}
           data={visibleTips}
           renderItem={renderTipsItem}
           keyExtractor={(item, index) => index.toString()}

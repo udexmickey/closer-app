@@ -7,6 +7,7 @@ import {
   ViewDiv,
 } from "nativewind.config";
 import { ImageSourcePropType } from "react-native";
+import { UserPhaseState } from "@/redux/action/userPhaseAction";
 
 type tasksBannerBannerType = {
   phase: string;
@@ -15,16 +16,40 @@ type tasksBannerBannerType = {
   backgroundColor: string;
   phaseColor: string;
   handleOnPress: () => void;
+  userPhase: UserPhaseState;
 };
 
 const TasksBannerBanner: React.FC<tasksBannerBannerType> = ({
   phase,
   description,
   // backgroundImage,
-  backgroundColor,
-  phaseColor,
+  // backgroundColor,
+  // phaseColor,
   handleOnPress,
+  userPhase,
 }) => {
+  const backgroundColor =
+    userPhase.userPhase === "ovulatory"
+      ? "#FFF7FA"
+      : userPhase.userPhase === "luteal"
+      ? "#FFF7F1"
+      : userPhase.userPhase === "follicular"
+      ? "#F7FCF7"
+      : userPhase.userPhase === "period"
+      ? "#E1F1FF"
+      : "#FFF7FA";
+
+  const phaseColor =
+    userPhase.userPhase === "ovulatory"
+      ? "#FF4B83"
+      : userPhase.userPhase === "luteal"
+      ? "#FD7900"
+      : userPhase.userPhase === "follicular"
+      ? "#0F9B3F"
+      : userPhase.userPhase === "period"
+      ? "#006FFD"
+      : "#006FFD";
+
   return (
     <ViewDiv className="w-full">
       <ViewDiv

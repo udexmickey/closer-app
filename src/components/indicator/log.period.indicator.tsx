@@ -85,13 +85,6 @@ const LogPeriodIndicator = ({
         </TouchableOpacityDiv>
       </ViewDiv>
 
-      {/* <ViewDiv className="flex flex-row w-full justify-center items-center wrapper flex-wrap">
-        <ViewDiv className="flex flex-col max-w-max w-max justify-center  items-center bg-[#F8F9F9] rounded-2xl p-3">
-          <TextDiv className="text-xl font-normal text-[#121212]">12</TextDiv>
-          <TextDiv className="text-xl font-normal text-[#121212]">S</TextDiv>
-        </ViewDiv>
-      </ViewDiv> */}
-
       <ViewDiv className="flex flex-col w-full justify-center items-center wrapper flex-wrap mx-auto max-w-screen">
         <FlatList
           data={daysOfWeek}

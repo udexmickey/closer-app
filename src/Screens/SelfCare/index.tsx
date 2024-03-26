@@ -6,7 +6,6 @@ import {
   TextDiv,
   TouchableOpacityDiv,
 } from "nativewind.config";
-import PhaseBanner from "../../components/banner/PhaseBanner";
 import { connect } from "react-redux";
 import { RootState } from "@/redux/reducer";
 import { UserPhaseState } from "@/redux/action/userPhaseAction";
@@ -22,7 +21,7 @@ interface SelfCareProps {
   userPhase: UserPhaseState; // Update the type to UserPhaseState
 }
 
-const SelfCareScreen: React.FC<SelfCareProps> = ({ navigation }) => {
+const SelfCareScreen: React.FC<SelfCareProps> = ({ navigation, userPhase }) => {
   const AddSymptom = () => {
     navigation.navigate("AddSymptom");
   };
@@ -40,10 +39,12 @@ const SelfCareScreen: React.FC<SelfCareProps> = ({ navigation }) => {
           phase={"Transform Your Cycle"}
           description={"Turn symptoms into steps for wellness."}
           // backgroundImage={""}
-          backgroundColor={"#FFF7F1"}
-          phaseColor={""}
+          // backgroundColor={"#FFF7F1"}
+          // phaseColor={""}
+          userPhase={userPhase}
         />
 
+        {/* // Symptom card component */}
         <ViewDiv
           className="shadow-md bg-white w-full max-w-sm rounded-2xl mx-auto border-[#E9EDF2]"
           style={{ borderWidth: 1.5 }}

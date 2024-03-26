@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import CalendarScreen from "@/Screens/Calender";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons, Feather } from "@expo/vector-icons";
 import SelfCareScreen from "@/Screens/SelfCare";
 import HomeScreen from "@/Screens/Home";
 import { StyleProp, TextStyle } from "react-native";
@@ -22,14 +22,14 @@ interface MenuBottomProps {
 const MenuBottom: React.FC<MenuBottomProps> = ({ userPhase }) => {
   const safeAreaBackgroundColor =
     userPhase.userPhase === "ovulatory"
-      ? "#FF4B83"
+      ? "#FFF7FA"
       : userPhase.userPhase === "luteal"
-      ? "#FD7900"
+      ? "#FFF7F1"
       : userPhase.userPhase === "follicular"
-      ? "#0F9B3F"
+      ? "#F7FCF7"
       : userPhase.userPhase === "period"
-      ? "#006FFD"
-      : "#red";
+      ? "#E1F1FF"
+      : "#FFF7FA";
 
   return (
     <Tab.Navigator
@@ -88,12 +88,7 @@ const MenuBottom: React.FC<MenuBottomProps> = ({ userPhase }) => {
           tabBarItemStyle: { paddingTop: 10 }, //use This for Icon or image
           tabBarLabelStyle: { paddingBottom: 10 }, // use This for lable
           tabBarIcon: ({ color, size }) => (
-            <Ionicons
-              // containerStyle={{ marginTop: 0, marginBottom: 0 }}
-              name="home"
-              color={color}
-              size={size}
-            />
+            <Feather name="home" color={color} size={size} />
           ),
         }}
       />
@@ -126,6 +121,9 @@ const MenuBottom: React.FC<MenuBottomProps> = ({ userPhase }) => {
           tabBarLabel: "Self Care",
           tabBarItemStyle: { paddingTop: 10 }, //use This for Icon or image
           tabBarLabelStyle: { paddingBottom: 10 }, // use This for lable
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="self-improvement" size={size} color={color} />
+          ),
         }}
       />
 

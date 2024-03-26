@@ -96,6 +96,7 @@ const TasksCheckBox: React.FC<TasksCheckBoxProps> = ({
           renderItem={renderTasksItem}
           keyExtractor={(item, index) => index.toString()}
           contentContainerStyle={styles.tasksList}
+          scrollEnabled={false}
         />
       </ViewDiv>
     </ViewDiv>

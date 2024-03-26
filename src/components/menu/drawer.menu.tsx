@@ -23,14 +23,14 @@ interface MyDrawerProps {
 const MyDrawer: React.FC<MyDrawerProps> = ({ userPhase }) => {
   const safeAreaBackgroundColor =
     userPhase.userPhase === "ovulatory"
-      ? "#FF4B83"
+      ? "#FFF7FA"
       : userPhase.userPhase === "luteal"
-      ? "#FD7900"
+      ? "#FFF7F1"
       : userPhase.userPhase === "follicular"
-      ? "#0F9B3F"
+      ? "#F7FCF7"
       : userPhase.userPhase === "period"
-      ? "#006FFD"
-      : "#red";
+      ? "#E1F1FF"
+      : "#FFF7FA";
 
   const BackArrow = ({ onPress }: { onPress?: () => void }) => (
     <ViewDiv className="flex items-center justify-center text-center flex-row gap-x-4 pr-6 w-32 h-12">

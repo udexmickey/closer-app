@@ -61,6 +61,7 @@ const TasksScreen: React.FC<TasksProps> = ({ navigation, userPhase }) => {
       <ScrollViewDiv className="flex-1 bg-white gap-y-4 mt-0">
         {/* // Tasks header Banner for user phase component */}
         <TasksBannerBanner
+          userPhase={userPhase}
           phase={"This Week’s Task"}
           description={
             "You have 3 tasks on the queue. Make sure you complete them when due."

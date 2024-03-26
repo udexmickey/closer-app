@@ -1,4 +1,3 @@
-import { View, Text } from "react-native";
 import React from "react";
 import { ViewDiv, TextDiv, TouchableOpacityDiv } from "nativewind.config";
 import CustomModal from "./CustomModal";

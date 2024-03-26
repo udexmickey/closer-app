@@ -1,16 +1,18 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import CalendarScreen from "@/Screens/Calender";
 import SelfCareScreen from "@/Screens/SelfCare";
-import { ProfileScreen } from "@/Screens/Profile";
+import ProfileScreen from "@/Screens/Profile";
 import HomeScreen from "@/Screens/Home";
 import MenuBottom from "./Bottom.menu";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import { TouchableOpacityDiv, ViewDiv } from "nativewind.config";
 import React from "react";
 import { UserPhaseState } from "@/redux/action/userPhaseAction";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/reducer";
 import { LogoutScreen } from "@/Screens/Logout";
+import { toggleNotifications } from "@/redux/action/activateNotificationsActions";
+import { toggleShowPhase } from "@/redux/action/toggleShowCurrentUserPhaseActions";
 
 const Drawer = createDrawerNavigator();
 
@@ -32,19 +34,47 @@ const MyDrawer: React.FC<MyDrawerProps> = ({ userPhase }) => {
       ? "#E1F1FF"
       : "#FFF7FA";
 
+  const notifications = useSelector((state: any) => state.notifications);
+  const dispatch = useDispatch();
+
+  const handleToggleNotifications = (isEnabled: boolean) => {
+    dispatch(toggleNotifications(isEnabled));
+  };
+
+  const toggleShowCurrentPhaseTitle = useSelector(
+    (state: any) => state.toggleShowCurrentPhaseTitle
+  );
+
+  const handleToggleToggleShowCurrentPhaseTitle = (isShow: boolean) => {
+    dispatch(toggleShowPhase(isShow));
+    console.log("toggleShowCurrentPhaseTitle", toggleShowCurrentPhaseTitle);
+  };
+
   const BackArrow = ({ onPress }: { onPress?: () => void }) => (
     <ViewDiv className="flex items-center justify-center text-center flex-row gap-x-4 pr-6 w-32 h-12">
       <TouchableOpacityDiv
-        onPress={onPress}
+        onPress={() => handleToggleNotifications(!notifications.isEnabled)}
         className="flex items-center justify-center"
       >
-        <Ionicons name="notifications-outline" size={22} />
+        {notifications.isEnabled ? (
+          <Ionicons name="notifications-outline" size={22} />
+        ) : (
+          <Ionicons name="notifications-off-outline" size={22} />
+        )}
       </TouchableOpacityDiv>
       <TouchableOpacityDiv
-        onPress={onPress}
+        onPress={() =>
+          handleToggleToggleShowCurrentPhaseTitle(
+            !toggleShowCurrentPhaseTitle.isShow
+          )
+        }
         className="flex items-center justify-center"
       >
-        <Feather name="eye-off" size={22} color="black" />
+        {toggleShowCurrentPhaseTitle.isShow ? (
+          <Feather name="eye-off" size={22} color="black" />
+        ) : (
+          <Feather name="eye" size={22} color="black" />
+        )}
       </TouchableOpacityDiv>
     </ViewDiv>
   );
@@ -115,8 +145,12 @@ const MyDrawer: React.FC<MyDrawerProps> = ({ userPhase }) => {
 };
 
 // Map Redux state to component props
-const mapStateToProps = (state: RootState) => ({
-  userPhase: state.userPhase, // Access the user phase from the root state
+const mapStateToProps = (state: any) => ({
+  userPhase: state.userPhase,
+  editProfile: state.editProfile,
+  notifications: state.notifications,
+  currentUser: state.currentUser,
+  toggleShowCurrentPhaseTitle: state.toggleShowCurrentPhaseTitle,
 });
 
 // Connect the component to the Redux store

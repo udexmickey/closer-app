@@ -33,6 +33,7 @@ const CareTipsCheckBox: React.FC<CareTipsCheckBoxProps> = ({
 
   const toggleTipsCompletion = (index: number) => {
     const updatedTips = [...tipsList];
+
     updatedTips[index].completed = !updatedTips[index].completed;
     setTipsList(updatedTips);
   };
@@ -72,10 +73,6 @@ const CareTipsCheckBox: React.FC<CareTipsCheckBoxProps> = ({
     </TouchableOpacity>
   );
 
-  const startIndex = page * pageSize;
-  const endIndex = Math.min((page + 1) * pageSize, tipsList.length);
-  const visibleTips = tipsList.slice(startIndex, endIndex);
-
   return (
     <ViewDiv style={styles.container}>
       <View>
@@ -88,10 +85,12 @@ const CareTipsCheckBox: React.FC<CareTipsCheckBoxProps> = ({
       <ViewDiv>
         <FlatList
           scrollEnabled={false}
-          data={visibleTips}
+          data={tips}
           renderItem={renderTipsItem}
           keyExtractor={(item, index) => index.toString()}
           contentContainerStyle={styles.tipsList}
+          numColumns={2}
+          columnWrapperStyle={{ gap: 10 }}
         />
       </ViewDiv>
     </ViewDiv>
@@ -116,6 +115,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginVertical: 5,
+    width: "50%",
+    padding: 5,
+    borderRadius: 5,
   },
   checkbox: {
     marginRight: 10,

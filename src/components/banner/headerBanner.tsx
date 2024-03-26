@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   ImageBackgroundDiv,
   ImageDiv,
@@ -7,9 +7,9 @@ import {
   ViewDiv,
 } from "nativewind.config";
 import { ImageSourcePropType } from "react-native";
+import { useSelector } from "react-redux";
 
 type headerBannerType = {
-  visible: boolean;
   user: string;
   phase: string;
   description: string;
@@ -21,7 +21,6 @@ type headerBannerType = {
 };
 
 const HeaderBanner: React.FC<headerBannerType> = ({
-  visible,
   user,
   phase,
   description,
@@ -31,6 +30,19 @@ const HeaderBanner: React.FC<headerBannerType> = ({
   onPress,
   buttonVisible,
 }) => {
+  const toggleShowCurrentPhaseTitle = useSelector(
+    (state: any) => state.toggleShowCurrentPhaseTitle
+  );
+
+  const [isShow, setIsShow] = React.useState<boolean>(
+    toggleShowCurrentPhaseTitle
+  );
+
+  useEffect(() => {
+    setIsShow(toggleShowCurrentPhaseTitle.isShow);
+    console.log("PhaseTitle", toggleShowCurrentPhaseTitle.isShow);
+  }, [toggleShowCurrentPhaseTitle.isShow]);
+
   return (
     <ViewDiv className="w-full">
       <ViewDiv
@@ -59,16 +71,18 @@ const HeaderBanner: React.FC<headerBannerType> = ({
                 <TextDiv className="text-[#000000] text-3xl font-semibold max-w-full w-[65%]">
                   You’re in your
                 </TextDiv>
-                <TextDiv
-                  className={`capitalize text-[${
-                    phaseColor ?? "#FF4B83"
-                  }] text-3xl font-semibold max-w-full w-[75%]`}
-                  style={{
-                    color: phaseColor || "#FF4B83",
-                  }}
-                >
-                  {(visible && phase + " Phase. ") ?? "Ovulatory Phase."}
-                </TextDiv>
+                {isShow ? (
+                  <TextDiv
+                    className={`capitalize text-[${
+                      phaseColor ?? "#FF4B83"
+                    }] text-3xl font-semibold max-w-full w-[75%]`}
+                    style={{
+                      color: phaseColor || "#FF4B83",
+                    }}
+                  >
+                    {phase + " Phase. " ?? "Ovulatory Phase."}
+                  </TextDiv>
+                ) : null}
                 <TextDiv className="capitalize text-[#62565A] text-sm max-w-md w-[65%] mt-2">
                   {description ?? "Connect, Harness Your Social Superpowers 🚀"}
                 </TextDiv>

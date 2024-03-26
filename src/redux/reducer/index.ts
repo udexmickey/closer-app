@@ -1,6 +1,10 @@
 import { combineReducers, Reducer } from 'redux';
 import userPhaseReducer from './userPhaseReducer'; // Assuming userPhaseReducer exports the reducer function
 import { UserPhaseState } from '../action/userPhaseAction';
+import { activateNotificationsReducer } from './activateNotificationsReducer';
+import { currentUserDetailsReducer } from './currentUserDetailsReducer';
+import { toggleShowCurrentPhaseReducer } from './toggleShowCurrentUserPhaseReducer';
+import { editProfileReducer } from './editProfileReducer';
 
 
 
@@ -11,9 +15,12 @@ export interface RootState {
 }
 
 // Combine reducers to create the root reducer
-const rootReducer: Reducer<RootState> = combineReducers({
+const rootReducer = combineReducers({
   userPhase: userPhaseReducer,
-  // Add other reducers here if needed
+  notifications: activateNotificationsReducer,
+  editProfile: editProfileReducer,
+  currentUser: currentUserDetailsReducer,
+  toggleShowCurrentPhaseTitle: toggleShowCurrentPhaseReducer,
 });
 
 export default rootReducer;

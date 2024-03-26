@@ -10,7 +10,7 @@ interface PhaseToolTipsProps {
   iconColor: string;
   textColor?: string;
   IconSize: any;
-  onPress?: () => void;
+  onPress: (text: string) => void;
 }
 
 const PhaseToolTips: React.FC<PhaseToolTipsProps> = ({
@@ -22,7 +22,7 @@ const PhaseToolTips: React.FC<PhaseToolTipsProps> = ({
   onPress,
 }) => {
   return (
-    <TouchableOpacityDiv onPress={onPress}>
+    <TouchableOpacityDiv onPress={() => onPress(lable)}>
       <ViewDiv className="flex flex-row gap-x-2 items-center">
         <SimpleLineIcons
           size={IconSize ?? 18}

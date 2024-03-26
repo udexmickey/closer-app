@@ -29,7 +29,7 @@ const CustomModal: React.FC<Props> = ({
       <ViewDiv
         // onPress={onClose}
         className="flex-1 justify-center items-center"
-        style={{ flex: 1, backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+        style={{ flex: 1, backgroundColor: "rgba(0, 0, 0, 0.8)" }}
       >
         <ViewDiv
           className={`w-full max-w-xs mt-0 max-h-max py-4 pb-8 justify-start items-start px-6 bg-white rounded-3xl`}
@@ -39,7 +39,7 @@ const CustomModal: React.FC<Props> = ({
               {title}
             </TextDiv>
             <TouchableOpacity onPress={onClose}>
-              <TextDiv className="text-xs font-semibold text-[#121212]">
+              <TextDiv className="text-sm font-semibold text-[#121212]">
                 X
               </TextDiv>
             </TouchableOpacity>

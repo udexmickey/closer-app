@@ -22,6 +22,10 @@ import { useAuth } from "@/context/authContext";
 import SetNewTaskScreen from "@/Screens/Tasks/SetNewTask/SetNewTask";
 import TasksScreen from "@/Screens/Tasks/index";
 import TaskAddedSuccessfullyScreen from "@/Screens/Tasks/TaskAddedSuccessfullyScreen/TaskAddedSuccessfullyScreen";
+import ChangePassword from "@/Screens/Profile/screens/ChangePassword";
+import PersonalInformation from "@/Screens/Profile/screens/PersonalInformation";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { toggleEditProfile } from "@/redux/action/editProfileActions";
 
 type RootStackParamList = {
   Onboarding: {
@@ -45,6 +49,8 @@ type RootStackParamList = {
   SetNewTaskScreen: undefined;
   TaskAddedSuccessfullyScreen: undefined;
   TasksScreen: undefined;
+  PersonalInformation: undefined;
+  ChangePassword: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -106,6 +112,13 @@ const Navigation = () => {
       />
     </>
   );
+
+  const editProfile = useSelector((state: any) => state.editProfile);
+  const dispatch = useDispatch();
+
+  const handleToggleEditProfile = (isEnabled: boolean) => {
+    dispatch(toggleEditProfile(isEnabled));
+  };
 
   return (
     <NavigationContainer ref={navigationRef}>
@@ -170,6 +183,44 @@ const Navigation = () => {
               })}
             />
             {symptomsRoute}
+            <Stack.Screen
+              name="PersonalInformation"
+              component={PersonalInformation}
+              options={({ navigation }) => ({
+                title: "Personal Information",
+                headerLeft: () => (
+                  <BackArrow onPress={() => navigation.goBack()} />
+                ),
+                headerRight: () => (
+                  <TouchableOpacityDiv
+                    className=" p-2 pt-0 pb-0 justify-center items-center flex-row gap-x-2"
+                    onPress={() =>
+                      handleToggleEditProfile(!editProfile.isEnabled)
+                    }
+                  >
+                    <AntDesign name="edit" size={16} color="#FF4B83" />
+                    <TextDiv className="text-[#FF4B83] font-medium text-sm">
+                      {editProfile.isEnabled ? "Disable" : "Edit"}
+                    </TextDiv>
+                  </TouchableOpacityDiv>
+                ),
+                headerTitle: "Personal Information",
+                headerShown: true,
+                headerBackgroundColor: "red",
+              })}
+            />
+            <Stack.Screen
+              name="ChangePassword"
+              component={ChangePassword}
+              options={({ navigation }) => ({
+                title: "Change Password",
+                headerLeft: () => (
+                  <BackArrow onPress={() => navigation.goBack()} />
+                ),
+                headerTitle: "Change Password",
+                headerShown: true,
+              })}
+            />
           </>
         ) : // when the onboarding is completed and the user is logged in it renders the main Navigation
         !state.hasCompletedOnbarding ? (
@@ -298,4 +349,14 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+// Map Redux state to component props
+const mapStateToProps = (state: any) => ({
+  userPhase: state.userPhase,
+  editProfile: state.editProfile,
+  notifications: state.notifications,
+  currentUser: state.currentUser,
+  toggleShowCurrentPhaseTitle: state.toggleShowCurrentPhaseTitle,
+});
+
+// Connect the component to the Redux store
+export default connect(mapStateToProps)(Navigation);

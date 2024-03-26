@@ -1,6 +1,11 @@
 import React from "react";
 import { View } from "react-native";
-import { Calendar } from "react-native-calendars";
+import {
+  Calendar,
+  CalendarList,
+  Agenda,
+  LocaleConfig,
+} from "react-native-calendars";
 
 const MyCalendar = () => {
   const currentDate = new Date(); // Get current date
@@ -68,15 +73,21 @@ const MyCalendar = () => {
   // Set selected color for current date
   const currentDateString = currentDate.toISOString().split("T")[0];
   newMarkedDates[currentDateString] = {
-    ...newMarkedDates[currentDateString],
-    selectedColor: "#006FFD", //this is the current date selectedcolor/backgroundcolor
+    selectedColor: "#FF4B83", //this is the current date selectedcolor/backgroundcolor
     dotColor: "#FF4B83",
     selectedDayTextColor: "#006FFD",
+    textColor: "#006FFD",
+    ...newMarkedDates[currentDateString],
   };
 
   return (
     <View style={{ flex: 1 }}>
       <Calendar
+        style={{
+          height: 345,
+          marginHorizontal: 6,
+          borderRadius: 10,
+        }}
         // Add any props you need to customize the calendar
         onDayPress={(day) => {
           console.log("Selected day: ", day);
@@ -84,15 +95,12 @@ const MyCalendar = () => {
         markedDates={newMarkedDates}
         hideExtraDays={false}
         enableSwipeMonths={true}
-        collapsable={true}
+        collapsable={false}
         disableAllTouchEventsForDisabledDays={true}
         theme={{
           selectedDayTextColor: "black",
         }}
         markingType="multi-dot"
-        onPointerDown={(event) => {
-          console.log("onPointerDown", event);
-        }}
       />
     </View>
   );

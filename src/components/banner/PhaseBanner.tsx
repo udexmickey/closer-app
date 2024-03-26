@@ -14,7 +14,6 @@ const PhaseBanner: React.FC<BannerProps> = ({ userPhase, buttonVisible }) => {
       case "ovulatory":
         return (
           <HeaderBanner
-            visible={true}
             user={"Adenike"}
             phase={"ovulatory"}
             description={"Connect, Harness Your Social Superpowers 🚀"}
@@ -27,7 +26,6 @@ const PhaseBanner: React.FC<BannerProps> = ({ userPhase, buttonVisible }) => {
       case "luteal":
         return (
           <HeaderBanner
-            visible={true}
             user={"Grace"}
             phase={"Luteal"}
             description={"Focus Inward for Personal Growth 🍁"}
@@ -40,7 +38,6 @@ const PhaseBanner: React.FC<BannerProps> = ({ userPhase, buttonVisible }) => {
       case "follicular":
         return (
           <HeaderBanner
-            visible={true}
             user={"Comfort"}
             phase={"follicular"}
             description={"Create, Dream Big, Initiate 🌟"}
@@ -53,7 +50,6 @@ const PhaseBanner: React.FC<BannerProps> = ({ userPhase, buttonVisible }) => {
       case "period":
         return (
           <HeaderBanner
-            visible={true}
             user={"Jennifer"}
             phase={"period"}
             description={"Reflect, Recharge, Reset 💪🏾"}
@@ -66,7 +62,6 @@ const PhaseBanner: React.FC<BannerProps> = ({ userPhase, buttonVisible }) => {
       default:
         return (
           <HeaderBanner
-            visible={true}
             user={"AI"}
             phase={"Free"}
             description={"Kindly log your next period's due date 🤒"}

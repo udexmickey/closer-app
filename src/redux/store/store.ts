@@ -1,10 +1,5 @@
-import { createStore, combineReducers } from 'redux';
-import userPhaseReducer from '../reducer/userPhaseReducer';
-
-const rootReducer = combineReducers({
-  userPhase: userPhaseReducer
-  // Add other reducers here if needed
-});
+import { createStore } from 'redux';
+import rootReducer from '../reducer';
 
 const store = createStore(rootReducer);
 

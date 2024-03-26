@@ -122,7 +122,7 @@ const MenuBottom: React.FC<MenuBottomProps> = ({ userPhase }) => {
           tabBarItemStyle: { paddingTop: 10 }, //use This for Icon or image
           tabBarLabelStyle: { paddingBottom: 10 }, // use This for lable
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="self-improvement" size={size} color={color} />
+            <MaterialIcons name="self-improvement" size={35} color={color} />
           ),
         }}
       />

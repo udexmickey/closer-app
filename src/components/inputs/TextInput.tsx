@@ -15,6 +15,7 @@ interface CustomTextInputProps {
   placeholder: string;
   secureTextEntry?: boolean;
   maxLength?: number;
+  disable?: boolean;
 }
 
 const CustomTextInput: React.FC<CustomTextInputProps> = ({
@@ -25,6 +26,7 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
   placeholder,
   secureTextEntry = false,
   maxLength,
+  disable,
 }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
 
@@ -62,6 +64,7 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
               : "default"
           } // Set keyboardType based on type
           maxLength={maxLength}
+          editable={disable}
         />
         {type === "password" && (
           <TouchableOpacityDiv

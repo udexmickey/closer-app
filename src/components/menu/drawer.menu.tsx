@@ -46,7 +46,7 @@ const MyDrawer: React.FC<MyDrawerProps> = ({ userPhase }) => {
   );
 
   const handleToggleToggleShowCurrentPhaseTitle = (isShow: boolean) => {
-    dispatch(toggleShowPhase(isShow));
+    dispatch(toggleShowPhase(!isShow));
     console.log("toggleShowCurrentPhaseTitle", toggleShowCurrentPhaseTitle);
   };
 
@@ -65,7 +65,7 @@ const MyDrawer: React.FC<MyDrawerProps> = ({ userPhase }) => {
       <TouchableOpacityDiv
         onPress={() =>
           handleToggleToggleShowCurrentPhaseTitle(
-            !toggleShowCurrentPhaseTitle.isShow
+            toggleShowCurrentPhaseTitle.isShow
           )
         }
         className="flex items-center justify-center"

@@ -6,8 +6,9 @@ import {
   FlatList,
   StyleSheet,
 } from "react-native";
-import { AntDesign, Feather, MaterialCommunityIcons } from "@expo/vector-icons"; // Import the icons from Expo vector icons
-import { TextDiv, TouchableOpacityDiv, ViewDiv } from "nativewind.config";
+import { Feather, MaterialCommunityIcons } from "@expo/vector-icons"; // Import the icons from Expo vector icons
+import { TextDiv, ViewDiv } from "nativewind.config";
+import LottieView from "lottie-react-native";
 
 export interface TasksItem {
   tasks: string;
@@ -29,24 +30,21 @@ const TasksCheckBox: React.FC<TasksCheckBoxProps> = ({
   const [page, setPage] = useState(0);
   const pageSize = 4;
 
-  const totalPages = Math.ceil(tasksList.length / pageSize);
+  // / settings for the celebration animation
+  const congratulationRef = React.useRef<LottieView>(null);
 
   const toggleTasksCompletion = (index: number) => {
     const updatedTasks = [...tasksList];
     updatedTasks[index].completed = !updatedTasks[index].completed;
     setTasksList(updatedTasks);
-  };
 
-  const planMoreTasksBackgroundColor =
-    userPhase === "ovulatory"
-      ? "#FF4B83"
-      : userPhase === "luteal"
-      ? "#FD7900"
-      : userPhase === "follicular"
-      ? "#0F9B3F"
-      : userPhase === "period"
-      ? "#006FFD"
-      : "#red";
+    /// settings for the celebration animation
+    // Check if the task is completed and play the animation
+    if (updatedTasks[index].completed && congratulationRef.current) {
+      congratulationRef.current.play();
+      console.log("celebration clicked");
+    }
+  };
 
   const renderTasksItem = ({
     item,
@@ -61,7 +59,6 @@ const TasksCheckBox: React.FC<TasksCheckBoxProps> = ({
     >
       <View style={styles.checkbox}>
         {item.completed ? (
-          // <AntDesign name="checkcircle" size={20} color="#FF4B83" />
           <MaterialCommunityIcons
             name="record-circle"
             size={20}
@@ -88,7 +85,6 @@ const TasksCheckBox: React.FC<TasksCheckBoxProps> = ({
           {title}
         </TextDiv>
       </View>
-
       {/* Render the FlatList */}
       <ViewDiv>
         <FlatList
@@ -99,6 +95,29 @@ const TasksCheckBox: React.FC<TasksCheckBoxProps> = ({
           scrollEnabled={false}
         />
       </ViewDiv>
+
+      {/* /// settings for the celebration animation */}
+      <LottieView
+        source={require("../../assets/animations/celebration.json")}
+        ref={congratulationRef}
+        loop={false}
+        resizeMode="cover"
+        autoPlay
+        style={{
+          width: "100%",
+          // height: 500,
+          alignSelf: "center",
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          flex: 1,
+          zIndex: -1,
+          backgroundColor: "rgba(255, 255, 255, 0.1)",
+          pointerEvents: "none",
+        }}
+      />
     </ViewDiv>
   );
 };
@@ -121,6 +140,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginVertical: 5,
+    zIndex: 100,
   },
   checkbox: {
     marginRight: 10,

@@ -9,7 +9,7 @@ enum UserPhases {
 }
 
 const initialState: UserPhaseState = {
-  userPhase: 'period' // Initial phase value fetched from the backend or set to a default value
+  userPhase: 'follicular' // Initial phase value fetched from the backend or set to a default value
 };
 
 const userPhaseReducer = (state: UserPhaseState = initialState, action: any): UserPhaseState => {

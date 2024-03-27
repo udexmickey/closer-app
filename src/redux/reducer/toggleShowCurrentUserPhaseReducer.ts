@@ -1,11 +1,12 @@
+// reducers/toggleShowCurrentUserPhaseReducer.ts
 import { createReducer } from '@reduxjs/toolkit';
 import { toggleShowPhase } from '../action/toggleShowCurrentUserPhaseActions';
 
-interface ShowPhaseState {
+interface ToggleShowPhaseState {
   isShow: boolean;
 }
 
-const initialState: ShowPhaseState = {
+const initialState: ToggleShowPhaseState = {
   isShow: true,
 };
 

@@ -1,6 +1,8 @@
+import LottieView from "lottie-react-native";
 import { ViewDiv } from "nativewind.config";
 import React, { useState } from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import Celebration from "../CelebrationEffect/celebration";
 
 interface Tab {
   title: string;
@@ -15,12 +17,20 @@ interface TabBarProps {
 const TabBar: React.FC<TabBarProps> = ({ tabs, initialTab = 0 }) => {
   const [activeTab, setActiveTab] = useState(initialTab);
 
+  const handleCelebrationTrigger = (index: any) => {
+    setActiveTab(index);
+  };
+
   const renderTabContent = () => {
     return tabs.map((tab, index) => (
       <TouchableOpacity
         key={index}
-        style={[styles.tab, activeTab === index && styles.activeTab]}
-        onPress={() => setActiveTab(index)}
+        style={[
+          styles.tab,
+          activeTab === index && styles.activeTab,
+          { zIndex: 10 },
+        ]}
+        onPress={() => handleCelebrationTrigger(index)}
       >
         <Text
           style={[styles.tabText, activeTab === index && styles.activeTabText]}
@@ -33,7 +43,10 @@ const TabBar: React.FC<TabBarProps> = ({ tabs, initialTab = 0 }) => {
 
   return (
     <ViewDiv style={styles.container}>
-      <ViewDiv style={styles.tabContainer} className="justify-between">
+      <ViewDiv
+        style={[styles.tabContainer, { zIndex: 10 }]}
+        className="justify-between"
+      >
         {renderTabContent()}
       </ViewDiv>
       <ViewDiv
@@ -43,6 +56,27 @@ const TabBar: React.FC<TabBarProps> = ({ tabs, initialTab = 0 }) => {
         {/* Render the content based on active tab */}
         {tabs[activeTab].component}
       </ViewDiv>
+
+      {/* <LottieView
+        source={require("../../assets/animations/celebration.json")}
+        ref={congratulationRef}
+        loop={false}
+        resizeMode="cover"
+        autoPlay
+        style={{
+          width: "100%",
+          // height: 500,
+          alignSelf: "center",
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          flex: 1,
+          backgroundColor: "rgba(255, 255, 255, 0.1)",
+          pointerEvents: "none",
+        }}
+      /> */}
     </ViewDiv>
   );
 };

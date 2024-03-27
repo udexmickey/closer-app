@@ -71,7 +71,7 @@ const TasksScreen: React.FC<TasksProps> = ({ navigation, userPhase }) => {
           handleOnPress={SetNewTaskScreen}
         />
 
-        <ViewDiv className=" bg-white w-full max-w-md mx-auto">
+        <ViewDiv className=" bg-white w-full max-w-md mx-auto relative">
           <ViewDiv className="flex flex-col w-full py-4 mx-auto justify-center gap-y-4 px-6">
             <TabBar tabs={tasktabs} />
           </ViewDiv>

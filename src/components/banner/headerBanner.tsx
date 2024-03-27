@@ -7,7 +7,7 @@ import {
   ViewDiv,
 } from "nativewind.config";
 import { ImageSourcePropType } from "react-native";
-import { useSelector } from "react-redux";
+import { connect, useSelector } from "react-redux";
 
 type headerBannerType = {
   user: string;
@@ -35,12 +35,13 @@ const HeaderBanner: React.FC<headerBannerType> = ({
   );
 
   const [isShow, setIsShow] = React.useState<boolean>(
-    toggleShowCurrentPhaseTitle
+    toggleShowCurrentPhaseTitle.isShow
   );
 
   useEffect(() => {
     setIsShow(toggleShowCurrentPhaseTitle.isShow);
     console.log("PhaseTitle", toggleShowCurrentPhaseTitle.isShow);
+    console.log("isShow", isShow);
   }, [toggleShowCurrentPhaseTitle.isShow]);
 
   return (
@@ -106,4 +107,14 @@ const HeaderBanner: React.FC<headerBannerType> = ({
   );
 };
 
-export default HeaderBanner;
+// Map Redux state to component props
+const mapStateToProps = (state: any) => ({
+  userPhase: state.userPhase,
+  editProfile: state.editProfile,
+  notifications: state.notifications,
+  currentUser: state.currentUser,
+  toggleShowCurrentPhaseTitle: state.toggleShowCurrentPhaseTitle,
+});
+
+// Connect the component to the Redux store
+export default connect(mapStateToProps)(HeaderBanner);

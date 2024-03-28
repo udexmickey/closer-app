@@ -26,9 +26,7 @@ const DrawerContentMenu = (
         {/* <TextDiv className="absolute top-10 right-5">X</TextDiv> */}
         <ViewDiv style={styles.drawerContent}>
           <TouchableOpacityDiv
-            onPress={() =>
-              navigation.navigate("PersonalInformation" as unknown as never)
-            }
+            onPress={() => navigation.navigate("Profile" as unknown as never)}
             className="flex items-center flex-row justify-between p-x-2  w-full overflow-hidden gap-x-2"
             activeOpacity={0.8}
           >

@@ -26,6 +26,7 @@ import ChangePassword from "@/Screens/Profile/screens/ChangePassword";
 import PersonalInformation from "@/Screens/Profile/screens/PersonalInformation";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { toggleEditProfile } from "@/redux/action/editProfileActions";
+import ProfileScreen from "@/Screens/Profile/index";
 
 type RootStackParamList = {
   Onboarding: {
@@ -49,6 +50,7 @@ type RootStackParamList = {
   SetNewTaskScreen: undefined;
   TaskAddedSuccessfullyScreen: undefined;
   TasksScreen: undefined;
+  Profile: undefined;
   PersonalInformation: undefined;
   ChangePassword: undefined;
 };
@@ -187,6 +189,33 @@ const Navigation = () => {
               })}
             />
             {symptomsRoute}
+
+            <Stack.Screen
+              name="Profile"
+              component={ProfileScreen}
+              options={({ navigation }) => ({
+                title: "Profile",
+                headerLeft: () => (
+                  <BackArrow onPress={() => navigation.goBack()} />
+                ),
+                headerRight: () => (
+                  <TouchableOpacityDiv
+                    className=" p-2 pt-0 pb-0 justify-center items-center flex-row gap-x-2"
+                    onPress={() =>
+                      handleToggleEditProfile(!editProfile.isEnabled)
+                    }
+                  >
+                    <AntDesign name="edit" size={16} color="#FF4B83" />
+                    <TextDiv className="text-[#FF4B83] font-medium text-sm">
+                      {editProfile.isEnabled ? "Disable" : "Edit"}
+                    </TextDiv>
+                  </TouchableOpacityDiv>
+                ),
+                headerTitle: "Personal Information",
+                headerShown: true,
+                headerBackgroundColor: "red",
+              })}
+            />
             <Stack.Screen
               name="PersonalInformation"
               component={PersonalInformation}

@@ -21,22 +21,21 @@ const ProfileNavigatorMenu: React.FC<ProfileNavigatorMenuProps> = ({
   };
 
   return (
-    <ViewDiv className="flex flex-row justify-between items-center p-4 rounded-lg mt-1 bg-[#FEF9F0]">
-      <ViewDiv className="flex flex-row justify-between items-center gap-x-3">
-        <ViewDiv className="font-medium text-[#3A3C42] text-sm">
-          {leftIcon}
+    <TouchableOpacityDiv onPress={onPressHandler}>
+      <ViewDiv className="flex flex-row justify-between items-center p-4 rounded-lg mt-1 bg-[#FEF9F0]">
+        <ViewDiv className="flex flex-row justify-between items-center gap-x-3">
+          <TextDiv className="font-medium text-[#3A3C42] text-sm">
+            {leftIcon}
+          </TextDiv>
+          <TextDiv className="font-medium text-[#535C6C] text-sm">
+            {title}
+          </TextDiv>
         </ViewDiv>
-        <TextDiv className="font-medium text-[#535C6C] text-sm">
-          {title}
+        <TextDiv className="font-medium text-[#878FA0] text-sm">
+          {rightIcon}
         </TextDiv>
       </ViewDiv>
-      <TouchableOpacityDiv
-        className="font-medium text-[#878FA0] text-sm"
-        onPress={onPressHandler}
-      >
-        {rightIcon}
-      </TouchableOpacityDiv>
-    </ViewDiv>
+    </TouchableOpacityDiv>
   );
 };
 

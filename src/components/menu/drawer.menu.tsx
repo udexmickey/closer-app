@@ -1,10 +1,11 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import { useNavigation, DrawerActions } from "@react-navigation/native";
 import CalendarScreen from "@/Screens/Calender";
 import SelfCareScreen from "@/Screens/SelfCare";
 import ProfileScreen from "@/Screens/Profile";
 import HomeScreen from "@/Screens/Home";
 import MenuBottom from "./Bottom.menu";
-import { Ionicons, Feather } from "@expo/vector-icons";
+import { Ionicons, Feather, Entypo } from "@expo/vector-icons";
 import { TouchableOpacityDiv, ViewDiv } from "nativewind.config";
 import React from "react";
 import { UserPhaseState } from "@/redux/action/userPhaseAction";
@@ -13,6 +14,8 @@ import { RootState } from "@/redux/reducer";
 import { LogoutScreen } from "@/Screens/Logout";
 import { toggleNotifications } from "@/redux/action/activateNotificationsActions";
 import { toggleShowPhase } from "@/redux/action/toggleShowCurrentUserPhaseActions";
+import DrawerContentMenu from "./DrawerContent.menu";
+import { useRoute } from "@react-navigation/native";
 
 const Drawer = createDrawerNavigator();
 
@@ -20,9 +23,10 @@ interface MyDrawerProps {
   userPhase: UserPhaseState; // Update the type to UserPhaseState
 }
 
-// export function MyDrawer<MyDrawerProps>({ userPhase }) {
-
 const MyDrawer: React.FC<MyDrawerProps> = ({ userPhase }) => {
+  const navigation = useNavigation();
+  const route = useRoute();
+
   const safeAreaBackgroundColor =
     userPhase.userPhase === "ovulatory"
       ? "#FFF7FA"
@@ -50,7 +54,20 @@ const MyDrawer: React.FC<MyDrawerProps> = ({ userPhase }) => {
     console.log("toggleShowCurrentPhaseTitle", toggleShowCurrentPhaseTitle);
   };
 
-  const BackArrow = ({ onPress }: { onPress?: () => void }) => (
+  const MenuArrow = () => {
+    return (
+      <ViewDiv className="flex items-center justify-center text-center flex-row gap-x-4 pl-4 h-12">
+        <Entypo
+          name="menu"
+          size={24}
+          color="black"
+          onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+        />
+      </ViewDiv>
+    );
+  };
+
+  const BackArrow = () => (
     <ViewDiv className="flex items-center justify-center text-center flex-row gap-x-4 pr-6 w-32 h-12">
       <TouchableOpacityDiv
         onPress={() => handleToggleNotifications(!notifications.isEnabled)}
@@ -81,45 +98,49 @@ const MyDrawer: React.FC<MyDrawerProps> = ({ userPhase }) => {
 
   return (
     <Drawer.Navigator
-      initialRouteName="MenuBottom"
+      // initialRouteName="Home"
       screenOptions={{
+        headerStyle: {
+          backgroundColor:
+            route.name === "Home" ? safeAreaBackgroundColor : "#FFFFFF",
+        },
+        headerTintColor: "#121212",
         drawerPosition: "left",
-        // drawerStyle: { backgroundColor: safeAreaBackgroundColor },
+        headerShown: false,
       }}
+      drawerContent={(props) => <DrawerContentMenu {...props} />}
     >
       <Drawer.Screen
-        name="MenuBottom"
+        name="Profile"
         component={MenuBottom}
         options={({ navigation }) => ({
-          // drawerStyle: { backgroundColor: safeAreaBackgroundColor },
-          drawerLabel: "MenuBottom",
+          drawerLabel: "Profile",
           headerRight: () => <BackArrow />,
+          headerLeft: () => <MenuArrow />,
           headerTitle: "",
           headerShown: true,
+          headerTitleAlign: "center",
           drawerIcon: ({ color, size }) => (
             <Ionicons
               name="notifications-outline"
               color={"#535C6C"}
               size={22}
-              style={{
-                // height: 20,
-                // width: 20,
-                marginRight: -20,
-              }}
+              // style={{
+              // marginRight: -20,
+              // }}
             />
           ),
-          // drawerItemStyle: { paddingLeft: 60 }, //use This for Icon or image
-          drawerLabelStyle: {
-            paddingRight: 20,
-          },
+          // drawerLabelStyle: {
+          //   paddingRight: 20,
+          // },
         })}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="Profile"
         component={ProfileScreen}
         options={{ drawerLabel: "Profile" }}
-      />
-      <Drawer.Screen
+      /> */}
+      {/* <Drawer.Screen
         name="Home"
         component={HomeScreen}
         options={{ drawerLabel: "Home" }}
@@ -139,7 +160,7 @@ const MyDrawer: React.FC<MyDrawerProps> = ({ userPhase }) => {
         name="LogOut"
         component={LogoutScreen}
         options={{ drawerLabel: "LogOut" }}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 };

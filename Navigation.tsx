@@ -134,9 +134,13 @@ const Navigation = () => {
         }
         screenOptions={{
           headerShown: false,
-          // headerStyle: {
-          //   backgroundColor: "#FF4B83",
-          // },
+          headerStyle: {
+            backgroundColor: "#FFFFFF",
+          },
+          headerTintColor: "white",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
         }}
       >
         {/* when the Navigation first loads it renders the loading screen */}

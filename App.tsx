@@ -25,8 +25,9 @@ const App = () => {
         <PaperProvider theme={theme}>
           <StatusBar
             translucent
-            backgroundColor="red"
+            backgroundColor="transparent"
             barStyle="dark-content"
+            animated
           />
           <Navigation />
         </PaperProvider>

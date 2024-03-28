@@ -103,7 +103,7 @@ const MenuBottom: React.FC<MenuBottomProps> = ({ userPhase }) => {
         }}
       />
       <Tab.Screen
-        name="Menu"
+        name="Tasks"
         component={TasksScreen}
         options={{
           headerShown: false,
